@@ -84,29 +84,23 @@
 
 
 
-<meta name="description" content="写在前面这篇文章也是我以前写在CSDN上的文章…
-
-可以这样说，Log日志是除了debug外我们调试程序的全部了，但是在实际的开发中，系统原生的Log功能并不强大，它只能打印简单的字符串，如果碰到JSON，MAP一类的特殊字符串它的打印效果将极其糟糕。
-机缘巧合下，我有幸见在github上见到了一个功能很强大的LOG日志库Logger，它功能强大，当你使用它打印LOG日志时，它不仅能把普通的字符串">
+<meta name="description" content="可以这样说，Log日志是除了debug外我们调试程序的全部了，但是在实际的开发中，系统原生的Log功能并不强大，它只能打印简单的字符串，如果碰到JSON，MAP一类的特殊字符串它的打印效果将极其糟糕。
+机缘巧合下，我有幸见在github上见到了一个功能很强大的LOG日志库Logger，它功能强大，当你使用它打印LOG日志时，它不仅能把普通的字符串打印出来，甚至能定位你打印的位置。并且它能直接将J">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android Logger 日志框架实现">
 <meta property="og:url" content="http://yoursite.com/2015/11/29/Android-Logger-日志框架实现/index.html">
 <meta property="og:site_name" content="laoyuyu的blog">
-<meta property="og:description" content="写在前面这篇文章也是我以前写在CSDN上的文章…
-
-可以这样说，Log日志是除了debug外我们调试程序的全部了，但是在实际的开发中，系统原生的Log功能并不强大，它只能打印简单的字符串，如果碰到JSON，MAP一类的特殊字符串它的打印效果将极其糟糕。
-机缘巧合下，我有幸见在github上见到了一个功能很强大的LOG日志库Logger，它功能强大，当你使用它打印LOG日志时，它不仅能把普通的字符串">
+<meta property="og:description" content="可以这样说，Log日志是除了debug外我们调试程序的全部了，但是在实际的开发中，系统原生的Log功能并不强大，它只能打印简单的字符串，如果碰到JSON，MAP一类的特殊字符串它的打印效果将极其糟糕。
+机缘巧合下，我有幸见在github上见到了一个功能很强大的LOG日志库Logger，它功能强大，当你使用它打印LOG日志时，它不仅能把普通的字符串打印出来，甚至能定位你打印的位置。并且它能直接将J">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1824042-f5183b2ae512f0c3?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1824042-5c54ad4e80f0e13c?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1824042-2d75cdd4eeecc107?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://img.blog.csdn.net/20151129210035060">
-<meta property="og:updated_time" content="2017-01-19T08:13:40.262Z">
+<meta property="og:updated_time" content="2017-02-06T06:17:07.658Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android Logger 日志框架实现">
-<meta name="twitter:description" content="写在前面这篇文章也是我以前写在CSDN上的文章…
-
-可以这样说，Log日志是除了debug外我们调试程序的全部了，但是在实际的开发中，系统原生的Log功能并不强大，它只能打印简单的字符串，如果碰到JSON，MAP一类的特殊字符串它的打印效果将极其糟糕。
-机缘巧合下，我有幸见在github上见到了一个功能很强大的LOG日志库Logger，它功能强大，当你使用它打印LOG日志时，它不仅能把普通的字符串">
+<meta name="twitter:description" content="可以这样说，Log日志是除了debug外我们调试程序的全部了，但是在实际的开发中，系统原生的Log功能并不强大，它只能打印简单的字符串，如果碰到JSON，MAP一类的特殊字符串它的打印效果将极其糟糕。
+机缘巧合下，我有幸见在github上见到了一个功能很强大的LOG日志库Logger，它功能强大，当你使用它打印LOG日志时，它不仅能把普通的字符串打印出来，甚至能定位你打印的位置。并且它能直接将J">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1824042-f5183b2ae512f0c3?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
@@ -403,12 +397,10 @@
       
 
       
-        <h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>这篇文章也是我以前写在CSDN上的文章…</p>
-<hr>
+        <hr>
 <p>可以这样说，Log日志是除了debug外我们调试程序的全部了，但是在实际的开发中，系统原生的Log功能并不强大，它只能打印简单的字符串，如果碰到JSON，MAP一类的特殊字符串它的打印效果将极其糟糕。</p>
 <p>机缘巧合下，我有幸见在github上见到了一个功能很强大的LOG日志库<a href="https://github.com/orhanobut/logger" target="_blank" rel="external">Logger</a>，它功能强大，当你使用它打印LOG日志时，它不仅能把普通的字符串打印出来，甚至能定位你打印的位置。并且它能直接将JSON字符串格式化并打印出来，省下了我们手动格式化JSON字符串的时间。</p>
-<p>下面是它的打印效果图<br><img src="http://upload-images.jianshu.io/upload_images/1824042-f5183b2ae512f0c3?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="效果图"></p>
-<a id="more"></a>
+<p>下面是它的打印效果图<br><img src="http://upload-images.jianshu.io/upload_images/1824042-f5183b2ae512f0c3?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="效果图"><br><a id="more"></a></p>
 <h1 id="简单Logger日志实现"><a href="#简单Logger日志实现" class="headerlink" title="简单Logger日志实现"></a>简单Logger日志实现</h1><p>好了，看完Logger的功能介绍和效果图，想必你也很心动，也想要搞这样一个Logger库。<br>现在如果你想拥有这样一个日志系统，那么有两个简单的方法来供你选择：<br>    一、Clone <a href="https://github.com/orhanobut/logger" target="_blank" rel="external">点击我</a>，然后关闭此窗口…<br>    二、继续往下看。</p>
 <hr>
 <p>非常感谢你留下来继续看我的废话，现在让我们一起研究Logger的主要功能吧！</p>
@@ -611,7 +603,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简单Logger日志实现"><span class="nav-number">2.</span> <span class="nav-text">简单Logger日志实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#JSON格式化部实现"><span class="nav-number">2.1.</span> <span class="nav-text">JSON格式化部实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码定位的实现"><span class="nav-number">2.2.</span> <span class="nav-text">代码定位的实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#打印Map"><span class="nav-number">2.3.</span> <span class="nav-text">打印Map</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最终效果"><span class="nav-number">3.</span> <span class="nav-text">最终效果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最重要的还是放在最后面"><span class="nav-number">4.</span> <span class="nav-text">最重要的还是放在最后面</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简单Logger日志实现"><span class="nav-number">1.</span> <span class="nav-text">简单Logger日志实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#JSON格式化部实现"><span class="nav-number">1.1.</span> <span class="nav-text">JSON格式化部实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码定位的实现"><span class="nav-number">1.2.</span> <span class="nav-text">代码定位的实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#打印Map"><span class="nav-number">1.3.</span> <span class="nav-text">打印Map</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最终效果"><span class="nav-number">2.</span> <span class="nav-text">最终效果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最重要的还是放在最后面"><span class="nav-number">3.</span> <span class="nav-text">最重要的还是放在最后面</span></a></li></ol></div>
             
 
           </div>

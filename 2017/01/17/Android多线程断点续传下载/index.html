@@ -84,23 +84,20 @@
 
 
 
-<meta name="description" content="写在前面最近由于工作需要，需要使用网络下载功能，谷歌了许久，发现高大上的断点续传功能并没有想象中的那么难，需要使用到的api都是已熟悉的东西。
-原理其实断点续传的原理很简单，从字面上理解，所谓断点续传就是从停止的地方重新下载。断点：线程停止的位置。续传：从停止的位置重新下载。用代码解析就是：断点 ==&amp;gt; 当前线程已经下载完成的数据长度。续传 ==&amp;gt; 向服务器请求上次线程停止位置之后的数">
+<meta name="description" content="原理其实断点续传的原理很简单，从字面上理解，所谓断点续传就是从停止的地方重新下载。断点：线程停止的位置。续传：从停止的位置重新下载。用代码解析就是：断点：当前线程已经下载完成的数据长度。续传：向服务器请求上次线程停止位置之后的数据。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android多线程断点续传下载">
 <meta property="og:url" content="http://yoursite.com/2017/01/17/Android多线程断点续传下载/index.html">
 <meta property="og:site_name" content="laoyuyu的blog">
-<meta property="og:description" content="写在前面最近由于工作需要，需要使用网络下载功能，谷歌了许久，发现高大上的断点续传功能并没有想象中的那么难，需要使用到的api都是已熟悉的东西。
-原理其实断点续传的原理很简单，从字面上理解，所谓断点续传就是从停止的地方重新下载。断点：线程停止的位置。续传：从停止的位置重新下载。用代码解析就是：断点 ==&amp;gt; 当前线程已经下载完成的数据长度。续传 ==&amp;gt; 向服务器请求上次线程停止位置之后的数">
+<meta property="og:description" content="原理其实断点续传的原理很简单，从字面上理解，所谓断点续传就是从停止的地方重新下载。断点：线程停止的位置。续传：从停止的位置重新下载。用代码解析就是：断点：当前线程已经下载完成的数据长度。续传：向服务器请求上次线程停止位置之后的数据。">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1824042-411c25f0cb1927de?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1824042-843517c30becdcd6?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1824042-74a1e86dee5bd13c?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1824042-1fc216854a28525f?imageMogr2/auto-orient/strip">
-<meta property="og:updated_time" content="2017-01-19T07:30:03.511Z">
+<meta property="og:updated_time" content="2017-02-06T06:18:15.207Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android多线程断点续传下载">
-<meta name="twitter:description" content="写在前面最近由于工作需要，需要使用网络下载功能，谷歌了许久，发现高大上的断点续传功能并没有想象中的那么难，需要使用到的api都是已熟悉的东西。
-原理其实断点续传的原理很简单，从字面上理解，所谓断点续传就是从停止的地方重新下载。断点：线程停止的位置。续传：从停止的位置重新下载。用代码解析就是：断点 ==&amp;gt; 当前线程已经下载完成的数据长度。续传 ==&amp;gt; 向服务器请求上次线程停止位置之后的数">
+<meta name="twitter:description" content="原理其实断点续传的原理很简单，从字面上理解，所谓断点续传就是从停止的地方重新下载。断点：线程停止的位置。续传：从停止的位置重新下载。用代码解析就是：断点：当前线程已经下载完成的数据长度。续传：向服务器请求上次线程停止位置之后的数据。">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1824042-411c25f0cb1927de?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
@@ -397,8 +394,8 @@
       
 
       
-        <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>最近由于工作需要，需要使用网络下载功能，谷歌了许久，发现高大上的断点续传功能并没有想象中的那么难，需要使用到的api都是已熟悉的东西。</p>
-<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>其实断点续传的原理很简单，从字面上理解，所谓断点续传就是从停止的地方重新下载。<br><br>断点：线程停止的位置。<br><br>续传：从停止的位置重新下载。<br><br>用代码解析就是：<br><br>断点 ==&gt; 当前线程已经下载完成的数据长度。<br><br>续传 ==&gt; 向服务器请求上次线程停止位置之后的数据。<br><br>原理知道了，功能实现起来也简单。每当线程停止时就把已下载的数据长度写入记录文件，当重新下载时，从记录文件读取已经下载了的长度。而这个长度就是所需要的断点。<br><br>续传的实现也简单，可以通过设置网络请求参数，请求服务器从指定的位置开始读取数据。<br><br>而要实现这两个功能只需要使用到httpURLconnection里面的setRequestProperty方法便可以实现.<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setRequestProperty</span><span class="params">(String field, String newValue)</span></span></div></pre></td></tr></table></figure></p>
+        <hr>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>其实断点续传的原理很简单，从字面上理解，所谓断点续传就是从停止的地方重新下载。<br>断点：线程停止的位置。<br>续传：从停止的位置重新下载。<br>用代码解析就是：<br>断点：当前线程已经下载完成的数据长度。<br>续传：向服务器请求上次线程停止位置之后的数据。<br><a id="more"></a><br>原理知道了，功能实现起来也简单。每当线程停止时就把已下载的数据长度写入记录文件，当重新下载时，从记录文件读取已经下载了的长度。而这个长度就是所需要的断点。<br><br>续传的实现也简单，可以通过设置网络请求参数，请求服务器从指定的位置开始读取数据。<br><br>而要实现这两个功能只需要使用到httpURLconnection里面的setRequestProperty方法便可以实现.<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setRequestProperty</span><span class="params">(String field, String newValue)</span></span></div></pre></td></tr></table></figure></p>
 <p>如下所示，便是向服务器请求500-1000之间的500个byte：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">conn.setRequestProperty(<span class="string">"Range"</span>, <span class="string">"bytes="</span> + <span class="number">500</span> + <span class="string">"-"</span> + <span class="number">1000</span>);</div></pre></td></tr></table></figure></p>
 <p>以上只是续传的一部分需求，当我们获取到下载数据时，还需要将数据写入文件，而普通发File对象并不提供从指定位置写入数据的功能，这个时候，就需要使用到RandomAccessFile来实现从指定位置给文件写入数据的功能。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">seek</span><span class="params">(<span class="keyword">long</span> offset)</span></span></div></pre></td></tr></table></figure></p>
 <p>如下所示，便是从文件的的第100个byte后开始写入数据。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">raFile.seek(<span class="number">100</span>);</div></pre></td></tr></table></figure></p>
@@ -598,7 +595,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原理"><span class="nav-number">2.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多线程断点续传"><span class="nav-number">3.</span> <span class="nav-text">多线程断点续传</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#断点续传结构"><span class="nav-number">4.</span> <span class="nav-text">断点续传结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IDownloadListener-java"><span class="nav-number">5.</span> <span class="nav-text">IDownloadListener.java</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DownloadListener-java"><span class="nav-number">6.</span> <span class="nav-text">DownloadListener.java</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下载参数实体"><span class="nav-number">7.</span> <span class="nav-text">下载参数实体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下载任务线程"><span class="nav-number">8.</span> <span class="nav-text">下载任务线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下载入口"><span class="nav-number">9.</span> <span class="nav-text">下载入口</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最终效果"><span class="nav-number"></span> <span class="nav-text">最终效果</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#原理"><span class="nav-number">1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多线程断点续传"><span class="nav-number">2.</span> <span class="nav-text">多线程断点续传</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#断点续传结构"><span class="nav-number">3.</span> <span class="nav-text">断点续传结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IDownloadListener-java"><span class="nav-number">4.</span> <span class="nav-text">IDownloadListener.java</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DownloadListener-java"><span class="nav-number">5.</span> <span class="nav-text">DownloadListener.java</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下载参数实体"><span class="nav-number">6.</span> <span class="nav-text">下载参数实体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下载任务线程"><span class="nav-number">7.</span> <span class="nav-text">下载任务线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下载入口"><span class="nav-number">8.</span> <span class="nav-text">下载入口</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最终效果"><span class="nav-number"></span> <span class="nav-text">最终效果</span></a></div>
             
 
           </div>

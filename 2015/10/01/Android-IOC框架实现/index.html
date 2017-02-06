@@ -84,32 +84,20 @@
 
 
 
-<meta name="description" content="写在前面这篇文章是我以前写在CSDN上的，由于感觉CSDN上写作体验感觉不好，现在准备把以前的一些文章转到简书
-
-以上都是废话。。。。。
-什么是IOC？IOC框架称为控制控制反转框架也称为依赖注入框架，依赖注入(DI)和控制反转(IOC)是从不同的角度的描述的同一件事情，就是指通过引入IOC容器，利用依赖关系注入的方式，实现对象之间的解耦。
-IOC相关概念在写一个框架之前，我们需要了解下IOC的相">
+<meta name="description" content="什么是IOC？IOC框架称为控制控制反转框架也称为依赖注入框架，依赖注入(DI)和控制反转(IOC)是从不同的角度的描述的同一件事情，就是指通过引入IOC容器，利用依赖关系注入的方式，实现对象之间的解耦。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android IOC框架实现">
 <meta property="og:url" content="http://yoursite.com/2015/10/01/Android-IOC框架实现/index.html">
 <meta property="og:site_name" content="laoyuyu的blog">
-<meta property="og:description" content="写在前面这篇文章是我以前写在CSDN上的，由于感觉CSDN上写作体验感觉不好，现在准备把以前的一些文章转到简书
-
-以上都是废话。。。。。
-什么是IOC？IOC框架称为控制控制反转框架也称为依赖注入框架，依赖注入(DI)和控制反转(IOC)是从不同的角度的描述的同一件事情，就是指通过引入IOC容器，利用依赖关系注入的方式，实现对象之间的解耦。
-IOC相关概念在写一个框架之前，我们需要了解下IOC的相">
+<meta property="og:description" content="什么是IOC？IOC框架称为控制控制反转框架也称为依赖注入框架，依赖注入(DI)和控制反转(IOC)是从不同的角度的描述的同一件事情，就是指通过引入IOC容器，利用依赖关系注入的方式，实现对象之间的解耦。">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1824042-61e3aa536c6cf656?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1824042-2697bb44bb60522b?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1824042-abe686d30633587e?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1824042-849582cf0fc1d4a7?imageMogr2/auto-orient/strip">
-<meta property="og:updated_time" content="2017-01-19T07:27:44.860Z">
+<meta property="og:updated_time" content="2017-02-06T06:19:17.031Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android IOC框架实现">
-<meta name="twitter:description" content="写在前面这篇文章是我以前写在CSDN上的，由于感觉CSDN上写作体验感觉不好，现在准备把以前的一些文章转到简书
-
-以上都是废话。。。。。
-什么是IOC？IOC框架称为控制控制反转框架也称为依赖注入框架，依赖注入(DI)和控制反转(IOC)是从不同的角度的描述的同一件事情，就是指通过引入IOC容器，利用依赖关系注入的方式，实现对象之间的解耦。
-IOC相关概念在写一个框架之前，我们需要了解下IOC的相">
+<meta name="twitter:description" content="什么是IOC？IOC框架称为控制控制反转框架也称为依赖注入框架，依赖注入(DI)和控制反转(IOC)是从不同的角度的描述的同一件事情，就是指通过引入IOC容器，利用依赖关系注入的方式，实现对象之间的解耦。">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1824042-61e3aa536c6cf656?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
@@ -406,10 +394,8 @@ IOC相关概念在写一个框架之前，我们需要了解下IOC的相">
       
 
       
-        <h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>这篇文章是我以前写在CSDN上的，由于感觉CSDN上写作体验感觉不好，现在准备把以前的一些文章转到简书</p>
-<hr>
-<p>以上都是废话。。。。。</p>
-<h2 id="什么是IOC？"><a href="#什么是IOC？" class="headerlink" title="什么是IOC？"></a>什么是IOC？</h2><p>IOC框架称为控制控制反转框架也称为依赖注入框架，依赖注入(DI)和控制反转(IOC)是从不同的角度的描述的同一件事情，就是指通过引入IOC容器，利用依赖关系注入的方式，实现对象之间的解耦。</p>
+        <hr>
+<h2 id="什么是IOC？"><a href="#什么是IOC？" class="headerlink" title="什么是IOC？"></a>什么是IOC？</h2><p>IOC框架称为控制控制反转框架也称为依赖注入框架，依赖注入(DI)和控制反转(IOC)是从不同的角度的描述的同一件事情，就是指通过引入IOC容器，利用依赖关系注入的方式，实现对象之间的解耦。<br><a id="more"></a></p>
 <h2 id="IOC相关概念"><a href="#IOC相关概念" class="headerlink" title="IOC相关概念"></a>IOC相关概念</h2><p>在写一个框架之前，我们需要了解下IOC的相关概念。<br>简单来说，对象和IOC容器的关系就像电脑和外设之间的关系，其中电脑相当于对象，而IOC容器相当于一个个不同的电脑外设。外设具有不同的功能，并且他们和电脑之间都遵循着某种协议（如USB2.0协议），因此它们在彼此独立的同时却又能相互联系。<br>输入功能原本属于电脑的，但是外设键盘却能通过电脑提供的相关接口来控制电脑的输入功能，这就是IOC概念里面的控制反转。由于电脑和外设间都遵循着USB协议，键盘便可以实现随意切换，却不影响键盘的输入功能，这就是IOC概念里面的依赖注入。</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/1824042-61e3aa536c6cf656?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="电脑和外设"></p>
 <p>好了，了解完IOC协议后，便可以开始绘制相应的架构图了。</p>
@@ -617,7 +603,7 @@ IOC相关概念在写一个框架之前，我们需要了解下IOC的相">
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是IOC？"><span class="nav-number">1.1.</span> <span class="nav-text">什么是IOC？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IOC相关概念"><span class="nav-number">1.2.</span> <span class="nav-text">IOC相关概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IOC框架图"><span class="nav-number">1.3.</span> <span class="nav-text">IOC框架图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#功能实现"><span class="nav-number">1.4.</span> <span class="nav-text">功能实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ModuleListener"><span class="nav-number">1.4.1.</span> <span class="nav-text">ModuleListener</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AbsModule"><span class="nav-number">1.4.2.</span> <span class="nav-text">AbsModule</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IOCProxy"><span class="nav-number">1.4.3.</span> <span class="nav-text">IOCProxy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ModuleFactory"><span class="nav-number">1.4.4.</span> <span class="nav-text">ModuleFactory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AbsActivity"><span class="nav-number">1.4.5.</span> <span class="nav-text">AbsActivity</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.5.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#例子"><span class="nav-number">1.6.</span> <span class="nav-text">例子</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DEMO"><span class="nav-number">1.6.1.</span> <span class="nav-text">DEMO</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#IOC升级版，MVVM框架（实现了6-0权限封装、不需要xml的填充布局、module注入）"><span class="nav-number">2.</span> <span class="nav-text">IOC升级版，MVVM框架（实现了6.0权限封装、不需要xml的填充布局、module注入）</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是IOC？"><span class="nav-number">1.</span> <span class="nav-text">什么是IOC？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IOC相关概念"><span class="nav-number">2.</span> <span class="nav-text">IOC相关概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IOC框架图"><span class="nav-number">3.</span> <span class="nav-text">IOC框架图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#功能实现"><span class="nav-number">4.</span> <span class="nav-text">功能实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ModuleListener"><span class="nav-number">4.1.</span> <span class="nav-text">ModuleListener</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AbsModule"><span class="nav-number">4.2.</span> <span class="nav-text">AbsModule</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IOCProxy"><span class="nav-number">4.3.</span> <span class="nav-text">IOCProxy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ModuleFactory"><span class="nav-number">4.4.</span> <span class="nav-text">ModuleFactory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AbsActivity"><span class="nav-number">4.5.</span> <span class="nav-text">AbsActivity</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#例子"><span class="nav-number">6.</span> <span class="nav-text">例子</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DEMO"><span class="nav-number">6.1.</span> <span class="nav-text">DEMO</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#IOC升级版，MVVM框架（实现了6-0权限封装、不需要xml的填充布局、module注入）"><span class="nav-number"></span> <span class="nav-text">IOC升级版，MVVM框架（实现了6.0权限封装、不需要xml的填充布局、module注入）</span></a></div>
             
 
           </div>

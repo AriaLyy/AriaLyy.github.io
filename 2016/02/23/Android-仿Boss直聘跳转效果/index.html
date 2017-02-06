@@ -84,19 +84,19 @@
 
 
 
-<meta name="description" content="写在前面这段时间由于找工作的原因，下载了boss直聘，在ios最新版(4.1)上点击首页列表进行页面跳转的那个效果感觉很炫，但是android最新版本(4.2)上却没有对应的效果，不知道以前版本有没有，感觉很好奇，所以就有了本文…">
+<meta name="description" content="这段时间由于找工作的原因，下载了boss直聘，在ios最新版(4.1)上点击首页列表进行页面跳转的那个效果感觉很炫，但是android最新版本(4.2)上却没有对应的效果，不知道以前版本有没有，感觉很好奇，所以就有了本文…">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android 仿Boss直聘跳转效果">
 <meta property="og:url" content="http://yoursite.com/2016/02/23/Android-仿Boss直聘跳转效果/index.html">
 <meta property="og:site_name" content="laoyuyu的blog">
-<meta property="og:description" content="写在前面这段时间由于找工作的原因，下载了boss直聘，在ios最新版(4.1)上点击首页列表进行页面跳转的那个效果感觉很炫，但是android最新版本(4.2)上却没有对应的效果，不知道以前版本有没有，感觉很好奇，所以就有了本文…">
+<meta property="og:description" content="这段时间由于找工作的原因，下载了boss直聘，在ios最新版(4.1)上点击首页列表进行页面跳转的那个效果感觉很炫，但是android最新版本(4.2)上却没有对应的效果，不知道以前版本有没有，感觉很好奇，所以就有了本文…">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1824042-358db6ba9de28e7a?imageMogr2/auto-orient/strip">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1824042-1e22e868294016e3?imageMogr2/auto-orient/strip">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1824042-358db6ba9de28e7a?imageMogr2/auto-orient/strip">
-<meta property="og:updated_time" content="2017-01-19T08:14:33.291Z">
+<meta property="og:updated_time" content="2017-02-06T06:15:48.987Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 仿Boss直聘跳转效果">
-<meta name="twitter:description" content="写在前面这段时间由于找工作的原因，下载了boss直聘，在ios最新版(4.1)上点击首页列表进行页面跳转的那个效果感觉很炫，但是android最新版本(4.2)上却没有对应的效果，不知道以前版本有没有，感觉很好奇，所以就有了本文…">
+<meta name="twitter:description" content="这段时间由于找工作的原因，下载了boss直聘，在ios最新版(4.1)上点击首页列表进行页面跳转的那个效果感觉很炫，但是android最新版本(4.2)上却没有对应的效果，不知道以前版本有没有，感觉很好奇，所以就有了本文…">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1824042-358db6ba9de28e7a?imageMogr2/auto-orient/strip">
 
 
@@ -393,7 +393,8 @@
       
 
       
-        <h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>这段时间由于找工作的原因，下载了boss直聘，在ios最新版(4.1)上点击首页列表进行页面跳转的那个效果感觉很炫，但是android最新版本(4.2)上却没有对应的效果，不知道以前版本有没有，感觉很好奇，所以就有了本文…</p>
+        <hr>
+<p>这段时间由于找工作的原因，下载了boss直聘，在ios最新版(4.1)上点击首页列表进行页面跳转的那个效果感觉很炫，但是android最新版本(4.2)上却没有对应的效果，不知道以前版本有没有，感觉很好奇，所以就有了本文…</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/1824042-358db6ba9de28e7a?imageMogr2/auto-orient/strip" alt="这里写图片描述"><br><a id="more"></a></p>
 <h1 id="IOS版本boss直聘的效果"><a href="#IOS版本boss直聘的效果" class="headerlink" title="IOS版本boss直聘的效果"></a>IOS版本boss直聘的效果</h1><p><img src="http://upload-images.jianshu.io/upload_images/1824042-1e22e868294016e3?imageMogr2/auto-orient/strip" alt="这里写图片描述"></p>
 <h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1><p>通过多次观察页面跳转动画，发现其实现过程也很简单:<br><br>1、获取列表中item的位置。<br><br>2、把根布局缩放0.9倍，同时跳出悬浮框，添加一个View(暂且称它为tempView)，设置tempView的高度和宽度为列表的item的高度和宽度。<br><br>3、对tempView进行缩放，缩放倍数为tempView距离屏幕顶部，距离屏幕底部中的最大值处于tempView高度: Math.max(tempView.locationX, Math.abs(tempView.locationX - ScreenHeight)) / tempView.height。<br><br>4、在安卓上，即使设置<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Intent.FLAG_ACTIVITY_NO_ANIMATION</div></pre></td></tr></table></figure></p>
@@ -589,7 +590,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#IOS版本boss直聘的效果"><span class="nav-number">2.</span> <span class="nav-text">IOS版本boss直聘的效果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分析"><span class="nav-number">3.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#悬浮框代码"><span class="nav-number">4.</span> <span class="nav-text">悬浮框代码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#跳转类"><span class="nav-number">5.</span> <span class="nav-text">跳转类</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#启动代码"><span class="nav-number">6.</span> <span class="nav-text">启动代码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最终效果"><span class="nav-number">7.</span> <span class="nav-text">最终效果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DEMO点我"><span class="nav-number">8.</span> <span class="nav-text">DEMO点我</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#IOS版本boss直聘的效果"><span class="nav-number">1.</span> <span class="nav-text">IOS版本boss直聘的效果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分析"><span class="nav-number">2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#悬浮框代码"><span class="nav-number">3.</span> <span class="nav-text">悬浮框代码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#跳转类"><span class="nav-number">4.</span> <span class="nav-text">跳转类</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#启动代码"><span class="nav-number">5.</span> <span class="nav-text">启动代码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最终效果"><span class="nav-number">6.</span> <span class="nav-text">最终效果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DEMO点我"><span class="nav-number">7.</span> <span class="nav-text">DEMO点我</span></a></li></ol></div>
             
 
           </div>
