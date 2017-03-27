@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="android,Logger," />
+  <meta name="keywords" content="爬坑," />
 
 
 
@@ -84,24 +84,21 @@
 
 
 
-<meta name="description" content="可以这样说，Log日志是除了debug外我们调试程序的全部了，但是在实际的开发中，系统原生的Log功能并不强大，它只能打印简单的字符串，如果碰到JSON，MAP一类的特殊字符串它的打印效果将极其糟糕。
-机缘巧合下，我有幸见在github上见到了一个功能很强大的LOG日志库Logger，它功能强大，当你使用它打印LOG日志时，它不仅能把普通的字符串打印出来，甚至能定位你打印的位置。并且它能直接将J">
+<meta name="description" content="出现问题最近在为河北电信做定制游戏平台开发的时候，遇到了一个很奇怪的问题，在某些盒子上，从平台打开某些游戏，玩上几分钟，然后该退出游戏，回到公司的游戏平台后，便出现了页面数据丢失的问题。排查了几天(在这不得不吐槽电信的官僚主义，好话说尽，给予各种承诺，依然不提供可以进行adb调试的测试盒子)。最终发现是由于盒子内存太小(几年前的标准，1G内存！！！)，当运行大型游戏后，盒子系统自动kill了公司的">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android Logger 日志框架实现">
-<meta property="og:url" content="http://www.laoyuyu.me/2015/11/29/Android-Logger-日志框架实现/index.html">
+<meta property="og:title" content="记一次app进程被kill的经历">
+<meta property="og:url" content="http://www.laoyuyu.me/2017/03/27/记一次app进程被kill的经历/index.html">
 <meta property="og:site_name" content="laoyuyu的blog">
-<meta property="og:description" content="可以这样说，Log日志是除了debug外我们调试程序的全部了，但是在实际的开发中，系统原生的Log功能并不强大，它只能打印简单的字符串，如果碰到JSON，MAP一类的特殊字符串它的打印效果将极其糟糕。
-机缘巧合下，我有幸见在github上见到了一个功能很强大的LOG日志库Logger，它功能强大，当你使用它打印LOG日志时，它不仅能把普通的字符串打印出来，甚至能定位你打印的位置。并且它能直接将J">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1824042-f5183b2ae512f0c3?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1824042-5c54ad4e80f0e13c?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1824042-2d75cdd4eeecc107?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://img.blog.csdn.net/20151129210035060">
-<meta property="og:updated_time" content="2017-02-06T06:17:07.658Z">
+<meta property="og:description" content="出现问题最近在为河北电信做定制游戏平台开发的时候，遇到了一个很奇怪的问题，在某些盒子上，从平台打开某些游戏，玩上几分钟，然后该退出游戏，回到公司的游戏平台后，便出现了页面数据丢失的问题。排查了几天(在这不得不吐槽电信的官僚主义，好话说尽，给予各种承诺，依然不提供可以进行adb调试的测试盒子)。最终发现是由于盒子内存太小(几年前的标准，1G内存！！！)，当运行大型游戏后，盒子系统自动kill了公司的">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1824042-0daf1c5caf42ece2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1824042-af07b71ae9cfb717.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1824042-45b05eeebc3830d2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1824042-e55f84d12b3fefa3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-03-27T12:17:04.852Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android Logger 日志框架实现">
-<meta name="twitter:description" content="可以这样说，Log日志是除了debug外我们调试程序的全部了，但是在实际的开发中，系统原生的Log功能并不强大，它只能打印简单的字符串，如果碰到JSON，MAP一类的特殊字符串它的打印效果将极其糟糕。
-机缘巧合下，我有幸见在github上见到了一个功能很强大的LOG日志库Logger，它功能强大，当你使用它打印LOG日志时，它不仅能把普通的字符串打印出来，甚至能定位你打印的位置。并且它能直接将J">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1824042-f5183b2ae512f0c3?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:title" content="记一次app进程被kill的经历">
+<meta name="twitter:description" content="出现问题最近在为河北电信做定制游戏平台开发的时候，遇到了一个很奇怪的问题，在某些盒子上，从平台打开某些游戏，玩上几分钟，然后该退出游戏，回到公司的游戏平台后，便出现了页面数据丢失的问题。排查了几天(在这不得不吐槽电信的官僚主义，好话说尽，给予各种承诺，依然不提供可以进行adb调试的测试盒子)。最终发现是由于盒子内存太小(几年前的标准，1G内存！！！)，当运行大型游戏后，盒子系统自动kill了公司的">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1824042-0daf1c5caf42ece2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -129,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="http://www.laoyuyu.me/2015/11/29/Android-Logger-日志框架实现/"/>
+  <link rel="canonical" href="http://www.laoyuyu.me/2017/03/27/记一次app进程被kill的经历/"/>
 
 
 
 
 
-  <title> Android Logger 日志框架实现 | laoyuyu的blog </title>
+  <title> 记一次app进程被kill的经历 | laoyuyu的blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -290,7 +287,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://www.laoyuyu.me/2015/11/29/Android-Logger-日志框架实现/">
+  <link itemprop="mainEntityOfPage" href="http://www.laoyuyu.me/2017/03/27/记一次app进程被kill的经历/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="AriaLyy">
@@ -314,7 +311,7 @@
             
             
               
-                Android Logger 日志框架实现
+                记一次app进程被kill的经历
               
             
           </h1>
@@ -329,8 +326,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-11-29T19:10:35+08:00">
-                2015-11-29
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-27T20:14:03+08:00">
+                2017-03-27
               </time>
             
 
@@ -340,28 +337,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/框架/" itemprop="url" rel="index">
-                    <span itemprop="name">框架</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -370,8 +345,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2015/11/29/Android-Logger-日志框架实现/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/29/Android-Logger-日志框架实现/" itemprop="commentCount"></span>
+                <a href="/2017/03/27/记一次app进程被kill的经历/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/27/记一次app进程被kill的经历/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -381,7 +356,7 @@
 
           
           
-             <span id="/2015/11/29/Android-Logger-日志框架实现/" class="leancloud_visitors" data-flag-title="Android Logger 日志框架实现">
+             <span id="/2017/03/27/记一次app进程被kill的经历/" class="leancloud_visitors" data-flag-title="记一次app进程被kill的经历">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -408,28 +383,33 @@
       
 
       
-        <hr>
-<p>可以这样说，Log日志是除了debug外我们调试程序的全部了，但是在实际的开发中，系统原生的Log功能并不强大，它只能打印简单的字符串，如果碰到JSON，MAP一类的特殊字符串它的打印效果将极其糟糕。</p>
-<p>机缘巧合下，我有幸见在github上见到了一个功能很强大的LOG日志库<a href="https://github.com/orhanobut/logger" target="_blank" rel="external">Logger</a>，它功能强大，当你使用它打印LOG日志时，它不仅能把普通的字符串打印出来，甚至能定位你打印的位置。并且它能直接将JSON字符串格式化并打印出来，省下了我们手动格式化JSON字符串的时间。</p>
-<p>下面是它的打印效果图<br><img src="http://upload-images.jianshu.io/upload_images/1824042-f5183b2ae512f0c3?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="效果图"><br><a id="more"></a></p>
-<h1 id="简单Logger日志实现"><a href="#简单Logger日志实现" class="headerlink" title="简单Logger日志实现"></a>简单Logger日志实现</h1><p>好了，看完Logger的功能介绍和效果图，想必你也很心动，也想要搞这样一个Logger库。<br>现在如果你想拥有这样一个日志系统，那么有两个简单的方法来供你选择：<br>    一、Clone <a href="https://github.com/orhanobut/logger" target="_blank" rel="external">点击我</a>，然后关闭此窗口…<br>    二、继续往下看。</p>
-<hr>
-<p>非常感谢你留下来继续看我的废话，现在让我们一起研究Logger的主要功能吧！</p>
-<h2 id="JSON格式化部实现"><a href="#JSON格式化部实现" class="headerlink" title="JSON格式化部实现"></a>JSON格式化部实现</h2><p>当我第一次使用Logger JSON格式化的功能时，我心情是悲伤的，因为它让我抛弃了陪伴我多年的JSON格式化网页。本着无比悲痛的心情，有生以来我第一次极其认真的查看了开源项目的代码。<br>后来，看完代码后的我，心情是崩溃的，原本以为JOSN格式化这么高达上的功能一定是很复杂的代码实现，后来发现尼玛就一行代码就能搞定，这是什么鬼啊，说好的复杂代码呢？？<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">    * 打印JSON</div><div class="line">    *</div><div class="line">    * <span class="doctag">@param</span> jsonStr</div><div class="line">    */</div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">j</span><span class="params">(String jsonStr)</span> </span>&#123;</div><div class="line">       <span class="keyword">if</span> (isDebug) &#123;</div><div class="line">           String message;</div><div class="line">           <span class="keyword">try</span> &#123;</div><div class="line">               <span class="keyword">if</span> (jsonStr.startsWith(<span class="string">"&#123;"</span>)) &#123;</div><div class="line">                   JSONObject jsonObject = <span class="keyword">new</span> JSONObject(jsonStr);</div><div class="line">                   message = jsonObject.toString(JSON_INDENT); <span class="comment">//这个是核心方法</span></div><div class="line">               &#125; <span class="keyword">else</span> <span class="keyword">if</span> (jsonStr.startsWith(<span class="string">"["</span>)) &#123;</div><div class="line">                   JSONArray jsonArray = <span class="keyword">new</span> JSONArray(jsonStr);</div><div class="line">                   message = jsonArray.toString(JSON_INDENT);</div><div class="line">               &#125; <span class="keyword">else</span> &#123;</div><div class="line">                   message = jsonStr;</div><div class="line">               &#125;</div><div class="line">           &#125; <span class="keyword">catch</span> (JSONException e) &#123;</div><div class="line">               message = jsonStr;</div><div class="line">           &#125;</div><div class="line"></div><div class="line">           message = LINE_SEPARATOR + message;</div><div class="line">           String[] lines = message.split(LINE_SEPARATOR);</div><div class="line">           StringBuilder sb = <span class="keyword">new</span> StringBuilder();</div><div class="line">        printLog(D, lines);<span class="comment">//请不要关注这行，这是控制台输出的Log方法</span></div><div class="line">       &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
-<p>以上就是JSON格式化的方法，想必你和我当初一样充满了错愕，我们每天都在用toString()、toString()…然后竟然不知道还有个toString(int xxxx)的重载方法！！！！</p>
-<p>是的，高大上的JSON格式化功能不需要你998行代码，也不需要你99行代码，没错，你没看错，它就只需要你一行toString(int xxxx)，并且附带赠送你xxxx个缩进空格！！</p>
-<h2 id="代码定位的实现"><a href="#代码定位的实现" class="headerlink" title="代码定位的实现"></a>代码定位的实现</h2><p>当年，我还是个孩子的时候我就知道我很无知，后来当我看了Logger的Json格式化代码的实现后，我已经对它不屑一顾。后来当我看了代码定位的功能后，我觉得我还是太年轻了…<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">    * 代码定位</div><div class="line">    *</div><div class="line">    * <span class="doctag">@param</span> type</div><div class="line">    */</div><div class="line">   <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">printLocation</span><span class="params">(<span class="keyword">char</span> type, String... msg)</span> </span>&#123;</div><div class="line">       StackTraceElement[] stack = Thread.currentThread().getStackTrace();</div><div class="line">       <span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">       <span class="comment">//获取代码所运行的位置</span></div><div class="line">       <span class="keyword">for</span> (StackTraceElement e : stack) &#123;</div><div class="line">           String name = e.getClassName();</div><div class="line">           <span class="keyword">if</span> (!name.equals(L.class.getName())) &#123;</div><div class="line">               i++;</div><div class="line">           &#125; <span class="keyword">else</span> &#123;</div><div class="line">               <span class="keyword">break</span>;</div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line">       <span class="comment">//进行方法位置偏移</span></div><div class="line">       i += <span class="number">3</span>;</div><div class="line">       <span class="comment">//当我能准确获取到I时，本部分已经完结，以下代码都是废话，请不要关注</span></div><div class="line">       String className = stack[i].getFileName();</div><div class="line">       String methodName = stack[i].getMethodName();</div><div class="line">       <span class="keyword">int</span> lineNumber = stack[i].getLineNumber();</div><div class="line">       StringBuilder sb = <span class="keyword">new</span> StringBuilder();</div><div class="line">       printHunk(type, HORIZONTAL_DOUBLE_LINE + <span class="string">"   Location:"</span>);</div><div class="line">       sb.append(HORIZONTAL_DOUBLE_LINE)</div><div class="line">               .append(<span class="string">"   ("</span>).append(className).append(<span class="string">":"</span>).append(lineNumber).append(<span class="string">")# "</span>).append(methodName);</div><div class="line">       printHunk(type, sb.toString());</div><div class="line">       printHunk(type, msg == <span class="keyword">null</span> || msg.length == <span class="number">0</span> ? BOTTOM_BORDER : MIDDLE_BORDER);</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
-<p>注：上面并不是纯粹的Logger源码，那是我根据Logger的思路自己写的代码定位功能，事实上Logger源代码那部分写得很优秀，但是你也懂的，优秀也就意味着代码不好看懂…</p>
-<p>好吧，我承认，我当初就是因为看这部分看得心烦，感觉很不爽，然后一怒之下，根据它的思路重新来写的。。。</p>
-<p>好吧，现在来所说代码定位的原理。<br>如下图所示：<br><img src="http://upload-images.jianshu.io/upload_images/1824042-5c54ad4e80f0e13c?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="元素拦截"><br>我想，上面的图你一定很熟悉，没错，那就是我们经常用的debug 然后watch某个元素时候的界面。<br>在上面的图片中，我们看到了一堆数组，其中圈红色的部分是不是感觉有点特殊，因为包名并不是系统的包名，那些都是我们自己的类，自己的方法的元素。</p>
-<p>现在，我想聪明的你已经懂了，代码定位的原理是通过Thread.currentThread().getStackTrace()方法获取到所有的运行元素，并根据获取到的数组，进行一定的偏移来准确捕获Looger( )被调用的真正位置。</p>
-<p>根据JVM的运行原理，每当JVM执行一个方法时，它都会把该方法压到一个方法栈里面，根据栈的后入先出原则，我们可以知道，Logger( )被调用的位置一定是方法栈里面最先被压入的函数的位置。也就是红圈里面的最后一个元素。也就是我为什么要 i += 3的原因；</p>
-<p>附上我自己写的类L（Logger）的调用流程：<br><img src="http://upload-images.jianshu.io/upload_images/1824042-2d75cdd4eeecc107?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="L流程"></p>
-<p>我们终于获取到了代码所在行的确切位置了，要在控制台上实现代码定位也就简单多了。</p>
-<p>根据获取到的StackTraceElement元素，我们能通过api接口获取到运行类的类名及其该方法所被调用的位置，然后按照下面的格式进行封装，便能实现控制台代码的定位。<br>代码定位格式：<br>（类名：代码行）<br>只要按照上面的规则进行组合类名和行，再通过系统提供的Log进行输出，便能通过控制台直接跳转到所在的代码行。</p>
-<h2 id="打印Map"><a href="#打印Map" class="headerlink" title="打印Map"></a>打印Map</h2><p>这个没啥好说的…<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">   * 打印MAp</div><div class="line">   */</div><div class="line">  public static void m(Map map) &#123;</div><div class="line">      Set set = map.entrySet();</div><div class="line">      if (set.size() &lt; 1) &#123;</div><div class="line">          printLog(D, &quot;[]&quot;);</div><div class="line">          return;</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      int i = 0;</div><div class="line">      String[] s = new String[set.size()];</div><div class="line">      for (Object aSet : set) &#123;</div><div class="line">          Map.Entry entry = (Map.Entry) aSet;</div><div class="line">          s[i] = entry.getKey() + &quot; = &quot; + entry.getValue() + &quot;,\n&quot;;</div><div class="line">          i++;</div><div class="line">      &#125;</div><div class="line">      printLog(V, s);</div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
-<h1 id="最终效果"><a href="#最终效果" class="headerlink" title="最终效果"></a>最终效果</h1><p><img src="http://img.blog.csdn.net/20151129210035060" alt="最终效果"></p>
-<h1 id="最重要的还是放在最后面"><a href="#最重要的还是放在最后面" class="headerlink" title="最重要的还是放在最后面"></a>最重要的还是放在最后面</h1><p><a href="https://github.com/AriaLyy/BlogDemo/tree/master/MyLoggerDemo" target="_blank" rel="external">我是伟大的DEMO</a></p>
+        <h1 id="出现问题"><a href="#出现问题" class="headerlink" title="出现问题"></a>出现问题</h1><p>最近在为河北电信做定制游戏平台开发的时候，遇到了一个很奇怪的问题，在某些盒子上，从平台打开某些游戏，玩上几分钟，然后该退出游戏，回到公司的游戏平台后，便出现了页面数据丢失的问题。<br>排查了几天(在这不得不吐槽电信的官僚主义，好话说尽，给予各种承诺，依然不提供可以进行adb调试的测试盒子)。最终发现是由于盒子内存太小(几年前的标准，1G内存！！！)，当运行大型游戏后，盒子系统自动kill了公司的游戏平台，吐血啊。<br>该问题如下图所示:<br><img src="http://upload-images.jianshu.io/upload_images/1824042-0daf1c5caf42ece2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="问题.png"></p>
+<a id="more"></a>
+<h1 id="如何重现"><a href="#如何重现" class="headerlink" title="如何重现"></a>如何重现</h1><p>既然知道了问题出现的原因，重现该问题也就简单了，具体步骤如下：</p>
+<ul>
+<li>打开你的app，通过按钮启动其它app</li>
+<li><p>利用adb 命令获取你的app 进程id</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">adb shell su</div><div class="line">ps | grep 包名</div></pre></td></tr></table></figure>
+<p>  如下图所示：<br>  <img src="http://upload-images.jianshu.io/upload_images/1824042-af07b71ae9cfb717.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="adb kill app.png"></p>
+</li>
+<li><p>利用adb命令kill 掉你的app进程</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">kill -9 6796</div></pre></td></tr></table></figure>
+</li>
+<li><p>退出你启动的app，返回</p>
+</li>
+</ul>
+<h1 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h1><p>既然知道了问题出现的原因，也知道了重现的方法，那么解决问题也就简单了。<br>但是多次加班的经验告诉我，这想法太天真了！！！！</p>
+<h2 id="onRestoreInstanceState-和-onSaveInstanceState-无法挽救被kill的app的命运"><a href="#onRestoreInstanceState-和-onSaveInstanceState-无法挽救被kill的app的命运" class="headerlink" title="onRestoreInstanceState 和 onSaveInstanceState 无法挽救被kill的app的命运"></a>onRestoreInstanceState 和 onSaveInstanceState 无法挽救被kill的app的命运</h2><p>按照网上的经验，面对内存数据被回收的情况，只要在<code>onSaveInstanceState</code>保存数据，在页面恢复时利用<code>onRestoreInstanceState</code>读取保存的数据，便可以高枕无忧。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span> <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onSaveInstanceState</span><span class="params">(Bundle outState)</span> </span>&#123;</div><div class="line">   <span class="comment">//保存数据</span></div><div class="line">   outState.putParcelable(<span class="string">"data"</span>, mGameDetailEntity);</div><div class="line">   <span class="keyword">super</span>.onSaveInstanceState(outState);</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onRestoreInstanceState</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">   <span class="keyword">super</span>.onRestoreInstanceState(savedInstanceState);</div><div class="line">   <span class="comment">//恢复数据，并重新设置界面</span></div><div class="line">   mGameDetailEntity = savedInstanceState.getParcelable(<span class="string">"data"</span>);</div><div class="line">   isKilled = <span class="keyword">true</span>;</div><div class="line">   setGameData(mGameDetailEntity);</div><div class="line">   FL.d(TAG, <span class="string">"Activity被kill, 重新调用"</span>);</div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+<p>但是多年爬坑的经历告诉我，网上的例子存在的意义只在于参考！！！<br>当App被kill掉后，如果只在activity中处理<code>onSaveInstanceState</code>和<code>onRestoreInstanceState</code>；不做其它任何处理，当前界面倒是正常了，当但你返回其它界面时，便会出现下图所示的情况。<br><img src="http://upload-images.jianshu.io/upload_images/1824042-45b05eeebc3830d2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="gg.png"></p>
+<p>what？我不是保存了数据了吗？怎么还会出现这崩溃的情况？</p>
+<p>继续使用adb命令查看线程，如下图所示<br><img src="http://upload-images.jianshu.io/upload_images/1824042-e55f84d12b3fefa3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="app 进程 id 变了.png"></p>
+<p>我们kill掉的app 的进程id为 6796 ，现在却变成了 7938！！<br>这也就意味着，系统重新启动了一个进程，相当于系统重新给app分配了内存，如果你的app有多个activity或者application中有实例化对像(这是不可避免的)。将会遇到我的情况，activity报空指针异常，或者某些数据报空指针异常。</p>
+<h1 id="如何完美解决该问题"><a href="#如何完美解决该问题" class="headerlink" title="如何完美解决该问题"></a>如何完美解决该问题</h1><p>我只能很抱歉的告诉你，对于这问题，目前还没有完美的解决方案，os自动重启进程，这已经不是我们能控制的范围了，现在是不是意味着我们已经不能解决这问题了；<br>当然不是，办法是人想的：<br><strong>既然系统自动重启进程(鬼知道系统会不会走我的流程操作)，干脆一不做二不休，自己重启app了，重新走一遍启动流程</strong></p>
+<h2 id="解决方案："><a href="#解决方案：" class="headerlink" title="解决方案："></a>解决方案：</h2><ul>
+<li>重新回到<code>onRestoreInstanceState</code>方法，在activity全局变量中，添加一个boolean(isKilled)用来判断app是否被kill掉，如果被kill掉，那么在<code>onRestoreInstanceState</code>给isKilled 赋值为true;</li>
+<li>执行最关键的步骤，在onBackPressed方法中，重启整个app<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onBackPressed</span><span class="params">()</span></span>&#123;</div><div class="line">  <span class="keyword">if</span> (isKilled) &#123;</div><div class="line">    reStartApp();</div><div class="line">    <span class="keyword">return</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">super</span>.onBackPressed();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">reStartApp</span><span class="params">()</span></span>&#123;</div><div class="line">  Intent intent = <span class="keyword">new</span> Intent(<span class="keyword">this</span>, LauncherActivity.class);</div><div class="line">   <span class="keyword">int</span> pId = <span class="number">123456</span>;</div><div class="line">   PendingIntent pi = PendingIntent.getActivity(<span class="keyword">this</span>, pId, intent, PendingIntent.FLAG_CANCEL_CURRENT);</div><div class="line">   AlarmManager mgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);</div><div class="line">   mgr.set(AlarmManager.RTC, System.currentTimeMillis() + <span class="number">100</span>, pi);</div><div class="line">   System.exit(<span class="number">0</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
 
       
     </div>
@@ -453,9 +433,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/android/" rel="tag"># android</a>
-          
-            <a href="/tags/Logger/" rel="tag"># Logger</a>
+            <a href="/tags/爬坑/" rel="tag"># 爬坑</a>
           
         </div>
       
@@ -464,8 +442,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/10/29/Android-仿微信侧滑关闭页面效果/" rel="next" title="Android 仿微信侧滑关闭页面效果">
-                <i class="fa fa-chevron-left"></i> Android 仿微信侧滑关闭页面效果
+              <a href="/2017/02/17/那些年，我们爬过的坑-Andriud-TV篇（一）/" rel="next" title="那些年，我们爬过的坑--Andriud TV篇（一）">
+                <i class="fa fa-chevron-left"></i> 那些年，我们爬过的坑--Andriud TV篇（一）
               </a>
             
           </div>
@@ -473,10 +451,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/12/17/Android-最简单的导航栏实现/" rel="prev" title="Android 最简单的导航栏实现">
-                Android 最简单的导航栏实现 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -491,10 +465,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2015/11/29/Android-Logger-日志框架实现/"
-     data-title="Android Logger 日志框架实现"
+        <div class="ds-share flat" data-thread-key="2017/03/27/记一次app进程被kill的经历/"
+     data-title="记一次app进程被kill的经历"
      data-content=""
-     data-url="http://www.laoyuyu.me/2015/11/29/Android-Logger-日志框架实现/">
+     data-url="http://www.laoyuyu.me/2017/03/27/记一次app进程被kill的经历/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -524,8 +498,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2015/11/29/Android-Logger-日志框架实现/"
-           data-title="Android Logger 日志框架实现" data-url="http://www.laoyuyu.me/2015/11/29/Android-Logger-日志框架实现/">
+      <div class="ds-thread" data-thread-key="2017/03/27/记一次app进程被kill的经历/"
+           data-title="记一次app进程被kill的经历" data-url="http://www.laoyuyu.me/2017/03/27/记一次app进程被kill的经历/">
       </div>
     
   </div>
@@ -636,7 +610,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简单Logger日志实现"><span class="nav-number">1.</span> <span class="nav-text">简单Logger日志实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#JSON格式化部实现"><span class="nav-number">1.1.</span> <span class="nav-text">JSON格式化部实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码定位的实现"><span class="nav-number">1.2.</span> <span class="nav-text">代码定位的实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#打印Map"><span class="nav-number">1.3.</span> <span class="nav-text">打印Map</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最终效果"><span class="nav-number">2.</span> <span class="nav-text">最终效果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最重要的还是放在最后面"><span class="nav-number">3.</span> <span class="nav-text">最重要的还是放在最后面</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#出现问题"><span class="nav-number">1.</span> <span class="nav-text">出现问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何重现"><span class="nav-number">2.</span> <span class="nav-text">如何重现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解决"><span class="nav-number">3.</span> <span class="nav-text">解决</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#onRestoreInstanceState-和-onSaveInstanceState-无法挽救被kill的app的命运"><span class="nav-number">3.1.</span> <span class="nav-text">onRestoreInstanceState 和 onSaveInstanceState 无法挽救被kill的app的命运</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何完美解决该问题"><span class="nav-number">4.</span> <span class="nav-text">如何完美解决该问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#解决方案："><span class="nav-number">4.1.</span> <span class="nav-text">解决方案：</span></a></li></ol></li></ol></div>
             
 
           </div>

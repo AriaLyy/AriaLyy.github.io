@@ -403,7 +403,7 @@
 
       
         <hr>
-<p>在上两篇文章中，我们已经实现了基本的界面的布局和移动效果，但是<code>mImgShotView</code>、<code>mContentView</code>却不能响应事件，而事件的响应就需要我们手动进行事件分发！<br><br><a href="http://www.laoyuyu.me/2016/03/21/Android-%E4%BB%BF%E5%BD%93%E4%B9%90%E6%B8%B8%E6%88%8F%E8%AF%A6%E6%83%85%E9%A1%B5%E9%9D%A2-%E4%B8%80/" target="_blank" rel="external">android 仿当乐游戏详情页面（一）</a><br><a href="http://www.laoyuyu.me/2016/03/28/Android-%E4%BB%BF%E5%BD%93%E4%B9%90%E6%B8%B8%E6%88%8F%E8%AF%A6%E6%83%85%E9%A1%B5%E9%9D%A2-%E4%BA%8C/" target="_blank" rel="external">android 仿当乐游戏详情页面（二）</a><br><a href="http://www.laoyuyu.me/2016/07/27/Android-%E4%BB%BF%E5%BD%93%E4%B9%90%E6%B8%B8%E6%88%8F%E8%AF%A6%E6%83%85%E9%A1%B5%E9%9D%A2-%E4%B8%89/" target="_blank" rel="external">android 仿当乐游戏详情页面（三）</a><br><a id="more"></a></p>
+<p>在上两篇文章中，我们已经实现了基本的界面的布局和移动效果，但是<code>mImgShotView</code>、<code>mContentView</code>却不能响应事件，而事件的响应就需要我们手动进行事件分发！<br><br><a href="http://www.laoyuyu.me/2016/03/21/Android-%E4%BB%BF%E5%BD%93%E4%B9%90%E6%B8%B8%E6%88%8F%E8%AF%A6%E6%83%85%E9%A1%B5%E9%9D%A2-%E4%B8%80/">android 仿当乐游戏详情页面（一）</a><br><a href="http://www.laoyuyu.me/2016/03/28/Android-%E4%BB%BF%E5%BD%93%E4%B9%90%E6%B8%B8%E6%88%8F%E8%AF%A6%E6%83%85%E9%A1%B5%E9%9D%A2-%E4%BA%8C/">android 仿当乐游戏详情页面（二）</a><br><a href="http://www.laoyuyu.me/2016/07/27/Android-%E4%BB%BF%E5%BD%93%E4%B9%90%E6%B8%B8%E6%88%8F%E8%AF%A6%E6%83%85%E9%A1%B5%E9%9D%A2-%E4%B8%89/">android 仿当乐游戏详情页面（三）</a><br><a id="more"></a></p>
 <h1 id="事件分发分析"><a href="#事件分发分析" class="headerlink" title="事件分发分析"></a>事件分发分析</h1><p>在前面第二篇中，我们是通过手势来实现布局的移动，为了让系统能响应手势，在<code>onTouchEvent(MotionEvent event)</code>方法里面，调用了<code>mDetector.onTouchEvent(event);</code>将系统的焦点传递给了手势，因此，当滑动<code>mImgShotView</code>这个ViewPager时，会出现焦点丢失，截图不能进行切换的问题。<br><br>因此，解决这个问题最好的方法就是重写<code>dispatchTouchEvent(MotionEvent ev)</code>方法，对事件分发进行处理。<br><br>在上一篇文章中，已经介绍了，在仿当乐的游戏详情页面中，<code>mContentView</code>有三种不同的状态：</p>
 <ol>
 <li>顶部状态时，<code>ToolBar</code>和<code>mContentView</code>将获取到焦点。</li>
@@ -575,7 +575,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -593,7 +593,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">15</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
