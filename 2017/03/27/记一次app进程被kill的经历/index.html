@@ -94,7 +94,7 @@
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1824042-af07b71ae9cfb717.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1824042-45b05eeebc3830d2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1824042-e55f84d12b3fefa3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-03-27T12:17:04.852Z">
+<meta property="og:updated_time" content="2017-03-30T12:26:25.860Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="记一次app进程被kill的经历">
 <meta name="twitter:description" content="出现问题最近在为河北电信做定制游戏平台开发的时候，遇到了一个很奇怪的问题，在某些盒子上，从平台打开某些游戏，玩上几分钟，然后该退出游戏，回到公司的游戏平台后，便出现了页面数据丢失的问题。排查了几天(在这不得不吐槽电信的官僚主义，好话说尽，给予各种承诺，依然不提供可以进行adb调试的测试盒子)。最终发现是由于盒子内存太小(几年前的标准，1G内存！！！)，当运行大型游戏后，盒子系统自动kill了公司的">
@@ -111,8 +111,8 @@
     fancybox: true,
     motion: true,
     duoshuo: {
-      userId: '6318972159993578000',
-      author: 'AriaLyy'
+      userId: 'undefined',
+      author: '博主'
     },
     algolia: {
       applicationID: '',
@@ -177,7 +177,7 @@
     </a>
   </div>
     
-      <p class="site-subtitle"></p>
+      <h1 class="site-subtitle" itemprop="description"></h1>
     
 </div>
 
@@ -307,14 +307,14 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
             
             
               
                 记一次app进程被kill的经历
               
             
-          </h1>
+          </h2>
         
 
         <div class="post-meta">
@@ -345,8 +345,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/03/27/记一次app进程被kill的经历/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/27/记一次app进程被kill的经历/" itemprop="commentCount"></span>
+                <a class="cloud-tie-join-count" href="/2017/03/27/记一次app进程被kill的经历/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -399,7 +399,7 @@
 </li>
 </ul>
 <h1 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h1><p>既然知道了问题出现的原因，也知道了重现的方法，那么解决问题也就简单了。<br>但是多次加班的经验告诉我，这想法太天真了！！！！</p>
-<h2 id="onRestoreInstanceState-和-onSaveInstanceState-无法挽救被kill的app的命运"><a href="#onRestoreInstanceState-和-onSaveInstanceState-无法挽救被kill的app的命运" class="headerlink" title="onRestoreInstanceState 和 onSaveInstanceState 无法挽救被kill的app的命运"></a>onRestoreInstanceState 和 onSaveInstanceState 无法挽救被kill的app的命运</h2><p>按照网上的经验，面对内存数据被回收的情况，只要在<code>onSaveInstanceState</code>保存数据，在页面恢复时利用<code>onRestoreInstanceState</code>读取保存的数据，便可以高枕无忧。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span> <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onSaveInstanceState</span><span class="params">(Bundle outState)</span> </span>&#123;</div><div class="line">   <span class="comment">//保存数据</span></div><div class="line">   outState.putParcelable(<span class="string">"data"</span>, mGameDetailEntity);</div><div class="line">   <span class="keyword">super</span>.onSaveInstanceState(outState);</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onRestoreInstanceState</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">   <span class="keyword">super</span>.onRestoreInstanceState(savedInstanceState);</div><div class="line">   <span class="comment">//恢复数据，并重新设置界面</span></div><div class="line">   mGameDetailEntity = savedInstanceState.getParcelable(<span class="string">"data"</span>);</div><div class="line">   isKilled = <span class="keyword">true</span>;</div><div class="line">   setGameData(mGameDetailEntity);</div><div class="line">   FL.d(TAG, <span class="string">"Activity被kill, 重新调用"</span>);</div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+<h2 id="onRestoreInstanceState-和-onSaveInstanceState-无法挽救被kill的app的命运"><a href="#onRestoreInstanceState-和-onSaveInstanceState-无法挽救被kill的app的命运" class="headerlink" title="onRestoreInstanceState 和 onSaveInstanceState 无法挽救被kill的app的命运"></a>onRestoreInstanceState 和 onSaveInstanceState 无法挽救被kill的app的命运</h2><p>按照网上的经验，面对内存数据被回收的情况，只要在<code>onSaveInstanceState</code>保存数据，在页面恢复时利用<code>onRestoreInstanceState</code>读取保存的数据，便可以高枕无忧。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span> <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onSaveInstanceState</span><span class="params">(Bundle outState)</span> </span>&#123;</div><div class="line">   <span class="comment">//保存数据</span></div><div class="line">   outState.putParcelable(<span class="string">"data"</span>, mGameDetailEntity);</div><div class="line">   <span class="comment">//保存当前进程id和当前页面hashCode</span></div><div class="line">   outState.putInt(<span class="string">"pid"</span>, Process.myPid());</div><div class="line">   outState.putInt(<span class="string">"hashCode"</span>, hashCode());</div><div class="line">   <span class="keyword">super</span>.onSaveInstanceState(outState);</div><div class="line">   <span class="keyword">super</span>.onSaveInstanceState(outState);</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onRestoreInstanceState</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">   <span class="keyword">super</span>.onRestoreInstanceState(savedInstanceState);</div><div class="line">   <span class="comment">//恢复数据，并重新设置界面</span></div><div class="line">   mGameDetailEntity = savedInstanceState.getParcelable(<span class="string">"data"</span>);</div><div class="line">   <span class="keyword">int</span> pid = savedInstanceState.getInt(<span class="string">"pid"</span>);</div><div class="line">   <span class="keyword">int</span> hashCode = savedInstanceState.getInt(<span class="string">"hashCode"</span>);</div><div class="line">   L.d(TAG, <span class="string">"pid ==&gt; "</span> + pid + <span class="string">", currentPid ==&gt; "</span> + Process.myPid());</div><div class="line">   L.d(TAG, <span class="string">"hashCode ==&gt; "</span> + hashCode + <span class="string">", currentHashCode ==&gt; "</span> + hashCode());</div><div class="line">   <span class="keyword">if</span> (pid != Process.myPid()) &#123;</div><div class="line">     isKilled = <span class="keyword">true</span>;</div><div class="line">   &#125;</div><div class="line">   setGameData(mGameDetailEntity);</div><div class="line">   FL.d(TAG, <span class="string">"Activity被kill, 重新调用"</span>);</div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
 <p>但是多年爬坑的经历告诉我，网上的例子存在的意义只在于参考！！！<br>当App被kill掉后，如果只在activity中处理<code>onSaveInstanceState</code>和<code>onRestoreInstanceState</code>；不做其它任何处理，当前界面倒是正常了，当但你返回其它界面时，便会出现下图所示的情况。<br><img src="http://upload-images.jianshu.io/upload_images/1824042-45b05eeebc3830d2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="gg.png"></p>
 <p>what？我不是保存了数据了吗？怎么还会出现这崩溃的情况？</p>
 <p>继续使用adb命令查看线程，如下图所示<br><img src="http://upload-images.jianshu.io/upload_images/1824042-e55f84d12b3fefa3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="app 进程 id 变了.png"></p>
@@ -452,6 +452,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2017/03/30/列表播放视频简单实现/" rel="prev" title="列表播放视频简单实现">
+                列表播放视频简单实现 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -465,25 +469,6 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2017/03/27/记一次app进程被kill的经历/"
-     data-title="记一次app进程被kill的经历"
-     data-content=""
-     data-url="http://www.laoyuyu.me/2017/03/27/记一次app进程被kill的经历/">
-  <div class="ds-share-inline">
-    <ul  class="ds-share-icons-16">
-
-      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
-      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
-      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
-      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
-      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
-
-    </ul>
-    <div class="ds-share-icons-more">
-    </div>
-  </div>
-</div>
-      
     </div>
   </div>
 
@@ -491,16 +476,11 @@
           </div>
           
 
-  <p>热评文章</p>
-  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
-
 
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/03/27/记一次app进程被kill的经历/"
-           data-title="记一次app进程被kill的经历" data-url="http://www.laoyuyu.me/2017/03/27/记一次app进程被kill的经历/">
-      </div>
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
     
   </div>
 
@@ -546,7 +526,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">15</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -564,7 +544,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-count">16</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -729,39 +709,31 @@
 
   
 
-  
-    
-  
 
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"AriaLyy"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
 
-  
-    
-      
-      <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
-      <script src="/js/src/hook-duoshuo.js?v=5.1.0"></script>
-    
-    
-    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
-    <script src="/js/src/hook-duoshuo.js"></script>
   
 
 
 
 
+	
 
 
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "b59ed17a4f24455096d3abe2daaa974b",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
 
 
 
@@ -1007,6 +979,21 @@
 
 
   
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
 
   
 

@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="实用工具," />
+  <meta name="keywords" content="视频播放," />
 
 
 
@@ -84,28 +84,24 @@
 
 
 
-<meta name="description" content="colorcop在开发中，总会遇到UI妹妹不标识颜色的情况，有时，找她们备注颜色，总会被骂个狗血淋头（说多了都是泪），求人不如求己。colorcop是一款window下取色软件，在本人使用过的10多款软件中，在简洁易用性方面简直秒杀所有！
-软件截图：">
+<meta name="description" content="最近因项目需求，需要在滚动列表中播放视频。查了半天资料，发现其实现没有想象中的那么难。
+原理众所周知，由于SurfaceView没有UI同步缓冲区，就导致了在列表滚动的时候，正在播放的视频跟不上滚动的步伐；而在SDK 15的时候，谷歌官方提供了新的具有UI同步缓存的视频播放api TextureView。本文真是基于该新Api实现。
+代码实现1234567891011121314151617181">
 <meta property="og:type" content="article">
-<meta property="og:title" content="五款小众但异常实用的免费软件">
-<meta property="og:url" content="http://www.laoyuyu.me/2017/02/14/十款不是很出名但异常实用的软件/index.html">
+<meta property="og:title" content="列表播放视频简单实现">
+<meta property="og:url" content="http://www.laoyuyu.me/2017/03/30/列表播放视频简单实现/index.html">
 <meta property="og:site_name" content="laoyuyu的blog">
-<meta property="og:description" content="colorcop在开发中，总会遇到UI妹妹不标识颜色的情况，有时，找她们备注颜色，总会被骂个狗血淋头（说多了都是泪），求人不如求己。colorcop是一款window下取色软件，在本人使用过的10多款软件中，在简洁易用性方面简直秒杀所有！
-软件截图：">
-<meta property="og:image" content="http://ol19jleh5.bkt.clouddn.com/blog_color_cop_shot.png?watermark/2/text/bGFveXV5dS5tZQ==/font/5a6L5L2T/fontsize/500/fill/IzA5OTY3NA==/dissolve/100/gravity/SouthEast/dx/10/dy/10">
-<meta property="og:image" content="http://ol19jleh5.bkt.clouddn.com/blog_color_cop_shot_1.png?watermark/2/text/bGFveXV5dS5tZQ==/font/5a6L5L2T/fontsize/500/fill/IzA5OTY3NA==/dissolve/100/gravity/SouthEast/dx/10/dy/10">
-<meta property="og:image" content="http://ol19jleh5.bkt.clouddn.com/blog_staruml.png?watermark/2/text/bGFveXV5dS5tZQ==/font/5a6L5L2T/fontsize/500/fill/IzA5OTY3NA==/dissolve/100/gravity/SouthEast/dx/10/dy/10">
-<meta property="og:image" content="http://ol19jleh5.bkt.clouddn.com/blog_atom_shot.png?watermark/2/text/bGFveXV5dS5tZQ==/font/5a6L5L2T/fontsize/500/fill/IzA5OTY3NA==/dissolve/100/gravity/SouthEast/dx/10/dy/10">
-<meta property="og:image" content="http://ol19jleh5.bkt.clouddn.com/blog_screen_gif_record.jpg?watermark/2/text/bGFveXV5dS5tZQ==/font/5a6L5L2T/fontsize/500/fill/IzA5OTY3NA==/dissolve/100/gravity/SouthEast/dx/10/dy/10">
-<meta property="og:image" content="http://ol19jleh5.bkt.clouddn.com/blog_screen_gif_shot_1.png?watermark/2/text/bGFveXV5dS5tZQ==/font/5a6L5L2T/fontsize/500/fill/IzA5OTY3NA==/dissolve/100/gravity/SouthEast/dx/10/dy/10">
-<meta property="og:image" content="http://ol19jleh5.bkt.clouddn.com/blog_screen_gif_editor.png?watermark/2/text/bGFveXV5dS5tZQ==/font/5a6L5L2T/fontsize/500/fill/IzA5OTY3NA==/dissolve/100/gravity/SouthEast/dx/10/dy/10">
-<meta property="og:image" content="http://ol19jleh5.bkt.clouddn.com/blog_everything.png?watermark/2/text/bGFveXV5dS5tZQ==/font/5a6L5L2T/fontsize/500/fill/IzA5OTY3NA==/dissolve/100/gravity/SouthEast/dx/10/dy/10">
-<meta property="og:updated_time" content="2017-02-14T06:43:41.744Z">
+<meta property="og:description" content="最近因项目需求，需要在滚动列表中播放视频。查了半天资料，发现其实现没有想象中的那么难。
+原理众所周知，由于SurfaceView没有UI同步缓冲区，就导致了在列表滚动的时候，正在播放的视频跟不上滚动的步伐；而在SDK 15的时候，谷歌官方提供了新的具有UI同步缓存的视频播放api TextureView。本文真是基于该新Api实现。
+代码实现1234567891011121314151617181">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1824042-b5a62237999fc2d9.gif?imageMogr2/auto-orient/strip">
+<meta property="og:updated_time" content="2017-03-30T12:30:12.482Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="五款小众但异常实用的免费软件">
-<meta name="twitter:description" content="colorcop在开发中，总会遇到UI妹妹不标识颜色的情况，有时，找她们备注颜色，总会被骂个狗血淋头（说多了都是泪），求人不如求己。colorcop是一款window下取色软件，在本人使用过的10多款软件中，在简洁易用性方面简直秒杀所有！
-软件截图：">
-<meta name="twitter:image" content="http://ol19jleh5.bkt.clouddn.com/blog_color_cop_shot.png?watermark/2/text/bGFveXV5dS5tZQ==/font/5a6L5L2T/fontsize/500/fill/IzA5OTY3NA==/dissolve/100/gravity/SouthEast/dx/10/dy/10">
+<meta name="twitter:title" content="列表播放视频简单实现">
+<meta name="twitter:description" content="最近因项目需求，需要在滚动列表中播放视频。查了半天资料，发现其实现没有想象中的那么难。
+原理众所周知，由于SurfaceView没有UI同步缓冲区，就导致了在列表滚动的时候，正在播放的视频跟不上滚动的步伐；而在SDK 15的时候，谷歌官方提供了新的具有UI同步缓存的视频播放api TextureView。本文真是基于该新Api实现。
+代码实现1234567891011121314151617181">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1824042-b5a62237999fc2d9.gif?imageMogr2/auto-orient/strip">
 
 
 
@@ -133,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="http://www.laoyuyu.me/2017/02/14/十款不是很出名但异常实用的软件/"/>
+  <link rel="canonical" href="http://www.laoyuyu.me/2017/03/30/列表播放视频简单实现/"/>
 
 
 
 
 
-  <title> 五款小众但异常实用的免费软件 | laoyuyu的blog </title>
+  <title> 列表播放视频简单实现 | laoyuyu的blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -294,7 +290,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://www.laoyuyu.me/2017/02/14/十款不是很出名但异常实用的软件/">
+  <link itemprop="mainEntityOfPage" href="http://www.laoyuyu.me/2017/03/30/列表播放视频简单实现/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="AriaLyy">
@@ -318,7 +314,7 @@
             
             
               
-                五款小众但异常实用的免费软件
+                列表播放视频简单实现
               
             
           </h2>
@@ -333,8 +329,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-14T10:31:14+08:00">
-                2017-02-14
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-30T20:27:37+08:00">
+                2017-03-30
               </time>
             
 
@@ -344,28 +340,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/工具/" itemprop="url" rel="index">
-                    <span itemprop="name">工具</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -374,7 +348,7 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a class="cloud-tie-join-count" href="/2017/02/14/十款不是很出名但异常实用的软件/#comments" itemprop="discussionUrl">
+                <a class="cloud-tie-join-count" href="/2017/03/30/列表播放视频简单实现/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count join-count" itemprop="commentCount"></span>
                 </a>
               </span>
@@ -385,7 +359,7 @@
 
           
           
-             <span id="/2017/02/14/十款不是很出名但异常实用的软件/" class="leancloud_visitors" data-flag-title="五款小众但异常实用的免费软件">
+             <span id="/2017/03/30/列表播放视频简单实现/" class="leancloud_visitors" data-flag-title="列表播放视频简单实现">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -412,34 +386,17 @@
       
 
       
-        <h1 id="colorcop"><a href="#colorcop" class="headerlink" title="colorcop"></a>colorcop</h1><p>在开发中，总会遇到UI妹妹不标识颜色的情况，有时，找她们备注颜色，总会被骂个狗血淋头（说多了都是泪），求人不如求己。<br>colorcop是一款window下取色软件，在本人使用过的10多款软件中，在简洁易用性方面简直秒杀所有！</p>
-<p>软件截图：<br><img src="http://ol19jleh5.bkt.clouddn.com/blog_color_cop_shot.png?watermark/2/text/bGFveXV5dS5tZQ==/font/5a6L5L2T/fontsize/500/fill/IzA5OTY3NA==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt="colorcop_1"><br><a id="more"></a><br><img src="http://ol19jleh5.bkt.clouddn.com/blog_color_cop_shot_1.png?watermark/2/text/bGFveXV5dS5tZQ==/font/5a6L5L2T/fontsize/500/fill/IzA5OTY3NA==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt="colorcop_2"></p>
-<p><a href="http://colorcop.net/" target="_blank" rel="external">colorcop下载地址</a></p>
-<h1 id="staruml"><a href="#staruml" class="headerlink" title="staruml"></a>staruml</h1><p>很不错的一款uml画图软件，支持uml 2.0。<br>小巧、免费、精美、支持多平台(window、mac、linux)。<br>自从用了staruml，再也不想使用臃肿的Rational Rose。<br>软件截图:<br><img src="http://ol19jleh5.bkt.clouddn.com/blog_staruml.png?watermark/2/text/bGFveXV5dS5tZQ==/font/5a6L5L2T/fontsize/500/fill/IzA5OTY3NA==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt="staruml"></p>
-<p><a href="http://staruml.io/" target="_blank" rel="external">staruml 下载地址</a></p>
-<h1 id="Atom"><a href="#Atom" class="headerlink" title="Atom"></a>Atom</h1><p>windows下markdown书写神器，github荣誉出品！</p>
-<ul>
-<li>界面优雅美观</li>
-<li>支持各种插件下载</li>
-<li>支持<code>markdown语法高亮</code></li>
-<li>支持代码高亮</li>
-<li>支持即时预览</li>
-</ul>
-<p>软件截图：<br><img src="http://ol19jleh5.bkt.clouddn.com/blog_atom_shot.png?watermark/2/text/bGFveXV5dS5tZQ==/font/5a6L5L2T/fontsize/500/fill/IzA5OTY3NA==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt="Atom界面截图"></p>
-<p><a href="https://atom.io/" target="_blank" rel="external">Atom下载地址</a></p>
-<h1 id="ScreenToGif"><a href="#ScreenToGif" class="headerlink" title="ScreenToGif"></a>ScreenToGif</h1><p>对于blog作者来说，gif动图展示莫过于最好的效果展示了，国内有很多动图制作软件，如：LICEcap、GifCam之流，但大多数都是滥竽充数的产品，不是广告太多就是功能太弱或者界面太丑。而ScreenToGif这款软件完全可以说秒杀他们几条街，谁用谁知道！！<br><br>ScreenToGif相对于它们有以下特点：</p>
-<ul>
-<li>支持大小拖动调整</li>
-<li>支持gif录制完成编辑</li>
-<li>ScreenToGif提供了一个功能完善的gif编辑器</li>
-</ul>
-<p>软件截图：<br> <img src="http://ol19jleh5.bkt.clouddn.com/blog_screen_gif_record.jpg?watermark/2/text/bGFveXV5dS5tZQ==/font/5a6L5L2T/fontsize/500/fill/IzA5OTY3NA==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt="screen_gif_record"></p>
-<p> <img src="http://ol19jleh5.bkt.clouddn.com/blog_screen_gif_shot_1.png?watermark/2/text/bGFveXV5dS5tZQ==/font/5a6L5L2T/fontsize/500/fill/IzA5OTY3NA==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt="screen_gif_setting"></p>
-<p> <img src="http://ol19jleh5.bkt.clouddn.com/blog_screen_gif_editor.png?watermark/2/text/bGFveXV5dS5tZQ==/font/5a6L5L2T/fontsize/500/fill/IzA5OTY3NA==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt="screen_gif_editor"></p>
-<p><a href="https://screentogif.codeplex.com/" target="_blank" rel="external">ScreenToGif下载地址</a></p>
-<h1 id="Everything"><a href="#Everything" class="headerlink" title="Everything"></a>Everything</h1><p>文件快速搜索工具，能在几秒钟内从数百GB的硬盘中精确搜索到需要的内容，支持高级搜索、正则表达式、网络搜索、离线搜索等等。<br><br>软件截图：<br><img src="http://ol19jleh5.bkt.clouddn.com/blog_everything.png?watermark/2/text/bGFveXV5dS5tZQ==/font/5a6L5L2T/fontsize/500/fill/IzA5OTY3NA==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt="Everything"></p>
-<p><a href="http://www.voidtools.com/" target="_blank" rel="external">Everything下载地址</a></p>
-
+        <p>最近因项目需求，需要在滚动列表中播放视频。查了半天资料，发现其实现没有想象中的那么难。</p>
+<h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><p>众所周知，由于SurfaceView没有UI同步缓冲区，就导致了在列表滚动的时候，正在播放的视频跟不上滚动的步伐；而在SDK 15的时候，谷歌官方提供了新的具有UI同步缓存的视频播放api TextureView。<br>本文真是基于该新Api实现。</p>
+<h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">RelativeLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"200dp"</span></div><div class="line">    <span class="attr">android:orientation</span>=<span class="string">"vertical"</span></div><div class="line">    <span class="attr">android:focusable</span>=<span class="string">"true"</span></div><div class="line">    &gt;</div><div class="line"></div><div class="line">  <span class="tag">&lt;<span class="name">TextureView</span></span></div><div class="line">      <span class="attr">android:id</span>=<span class="string">"@+id/video"</span></div><div class="line">      <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">      <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">      /&gt;</div><div class="line"></div><div class="line">  <span class="tag">&lt;<span class="name">ProgressBar</span></span></div><div class="line">      <span class="attr">android:id</span>=<span class="string">"@+id/pb"</span></div><div class="line">      <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">      <span class="attr">android:layout_height</span>=<span class="string">"200dp"</span></div><div class="line">      <span class="attr">android:layout_centerInParent</span>=<span class="string">"true"</span></div><div class="line">      /&gt;</div><div class="line"><span class="tag">&lt;/<span class="name">RelativeLayout</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>播放视频的item的布局文件，文件布局很简单，只有一个TextureView和一个ProgressBar，ProgressBar用于给用户展示视频的缓冲情况，TextureView用于处理视频播放。</p>
+<p>在adapter里面，除了对TextureView进行UI加载外，还需要MediaPlayer对视频播放提供支持，为了避免卡顿，需要在线程中处理MediaPlayer初始化操作。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">VideoPlay</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</div><div class="line">  MediaPlayer player;</div><div class="line">  String url;</div><div class="line">  WeakReference&lt;Surface&gt; surface;</div><div class="line">  WeakReference&lt;ProgressBar&gt; pb;</div><div class="line"></div><div class="line">  VideoPlay(String url, Surface surface, ProgressBar pb) &#123;</div><div class="line">    <span class="keyword">this</span>.url = url;</div><div class="line">    <span class="keyword">this</span>.surface = <span class="keyword">new</span> WeakReference&lt;&gt;(surface);</div><div class="line">    <span class="keyword">this</span>.pb = <span class="keyword">new</span> WeakReference&lt;&gt;(pb);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">void</span> <span class="title">stop</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (player != <span class="keyword">null</span> &amp;&amp; player.isPlaying()) &#123;</div><div class="line">      currentPosition = player.getCurrentPosition();</div><div class="line">      player.stop();</div><div class="line">      player.release();</div><div class="line">      player = <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">      player = <span class="keyword">new</span> MediaPlayer();</div><div class="line">      player.setDataSource(url);</div><div class="line">      player.setSurface(<span class="keyword">this</span>.surface.get());</div><div class="line">      player.setAudioStreamType(AudioManager.STREAM_VOICE_CALL);</div><div class="line">      player.setOnPreparedListener(<span class="keyword">new</span> MediaPlayer.OnPreparedListener() &#123;</div><div class="line">        <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPrepared</span><span class="params">(MediaPlayer mp)</span> </span>&#123;</div><div class="line">          <span class="keyword">if</span> (currentPosition != <span class="number">0</span> &amp;&amp; currentPosition != mp.getDuration()) &#123;</div><div class="line">            player.seekTo(currentPosition);</div><div class="line">          &#125;</div><div class="line">          player.start();</div><div class="line">          pb.get().setVisibility(View.INVISIBLE);</div><div class="line">        &#125;</div><div class="line">      &#125;);</div><div class="line">      player.setOnSeekCompleteListener(<span class="keyword">new</span> MediaPlayer.OnSeekCompleteListener() &#123;</div><div class="line">        <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSeekComplete</span><span class="params">(MediaPlayer mp)</span> </span>&#123;</div><div class="line">          currentPosition = <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">      &#125;);</div><div class="line">      player.prepare();</div><div class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">      e.printStackTrace();</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h1 id="利用TextureView播放视频"><a href="#利用TextureView播放视频" class="headerlink" title="利用TextureView播放视频"></a>利用TextureView播放视频</h1><p>在列表的Adapter中，需要对TextureView进行初始化处理，在Adapter绑定数据的时候，我们需要实现TextureView.SurfaceTextureListener，然后对TextureView设置生命周期监听，如下所示。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span> <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">bindData</span><span class="params">(MyHolder holder, <span class="keyword">int</span> position, Entity item)</span> </span>&#123;</div><div class="line">   <span class="keyword">if</span> (!item.isVideo) &#123;</div><div class="line">     Glide.with(getContext()).load(item.url).into(((ImgHolder) holder).img);</div><div class="line">   &#125; <span class="keyword">else</span> &#123;</div><div class="line">     mUrl = item.url;</div><div class="line">     VideoHolder helper = (VideoHolder) holder;</div><div class="line">     mPb = helper.pb;</div><div class="line">     <span class="keyword">if</span> (mPlayer == <span class="keyword">null</span>) &#123;</div><div class="line">       mPb.setVisibility(View.VISIBLE);</div><div class="line">     &#125;</div><div class="line">     helper.video.setVisibility(View.VISIBLE);</div><div class="line">     helper.video.setSurfaceTextureListener(<span class="keyword">this</span>);</div><div class="line">   &#125;</div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+<p>TextureView生命周期：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//TextureView 被初始化</span></div><div class="line"><span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSurfaceTextureAvailable</span><span class="params">(SurfaceTexture surface, <span class="keyword">int</span> width, <span class="keyword">int</span> height)</span> </span>&#123;</div><div class="line">  mPlayer = <span class="keyword">new</span> VideoPlay(mUrl, <span class="keyword">new</span> Surface(surface), mPb);</div><div class="line">  <span class="keyword">new</span> Thread(mPlayer).start();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSurfaceTextureSizeChanged</span><span class="params">(SurfaceTexture surface, <span class="keyword">int</span> width, <span class="keyword">int</span> height)</span> </span>&#123;</div><div class="line"></div><div class="line">&#125;</div><div class="line"><span class="comment">//TextureView 被销毁</span></div><div class="line"><span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onSurfaceTextureDestroyed</span><span class="params">(SurfaceTexture surface)</span> </span>&#123;</div><div class="line">  <span class="keyword">if</span> (mPlayer != <span class="keyword">null</span>) &#123;</div><div class="line">    mPlayer.stop();</div><div class="line">  &#125;</div><div class="line">  surface.release();</div><div class="line">  mPlayer = <span class="keyword">null</span>;</div><div class="line">  <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSurfaceTextureUpdated</span><span class="params">(SurfaceTexture surface)</span> </span>&#123;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在TextureView被初始化的时候，我们创建VideoPlay实例，然后开启一条新线程开始播放视频。<br>当TextureView 被销毁，我们需要调用VideoPlay的stop方法停止播放，并且销毁释放MediaPlayer资源。</p>
+<h1 id="最终效果"><a href="#最终效果" class="headerlink" title="最终效果"></a>最终效果</h1><p><img src="http://upload-images.jianshu.io/upload_images/1824042-b5a62237999fc2d9.gif?imageMogr2/auto-orient/strip" alt="简单的列表视频播放实现.gif"></p>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><p><a href="https://developer.android.com/reference/android/view/TextureView.html" target="_blank" rel="external">https://developer.android.com/reference/android/view/TextureView.html</a></p>
+<h1 id="DEMO点我"><a href="#DEMO点我" class="headerlink" title="DEMO点我"></a><a href="https://github.com/AriaLyy/BlogDemo" target="_blank" rel="external">DEMO点我</a></h1>
       
     </div>
 
@@ -462,7 +419,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/实用工具/" rel="tag"># 实用工具</a>
+            <a href="/tags/视频播放/" rel="tag"># 视频播放</a>
           
         </div>
       
@@ -471,8 +428,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/01/17/Android多线程断点续传下载/" rel="next" title="Android多线程断点续传下载">
-                <i class="fa fa-chevron-left"></i> Android多线程断点续传下载
+              <a href="/2017/03/27/记一次app进程被kill的经历/" rel="next" title="记一次app进程被kill的经历">
+                <i class="fa fa-chevron-left"></i> 记一次app进程被kill的经历
               </a>
             
           </div>
@@ -480,10 +437,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/02/17/那些年，我们爬过的坑-Andriud-TV篇（一）/" rel="prev" title="那些年，我们爬过的坑--Andriud TV篇（一）">
-                那些年，我们爬过的坑--Andriud TV篇（一） <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -619,7 +572,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#colorcop"><span class="nav-number">1.</span> <span class="nav-text">colorcop</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#staruml"><span class="nav-number">2.</span> <span class="nav-text">staruml</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Atom"><span class="nav-number">3.</span> <span class="nav-text">Atom</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ScreenToGif"><span class="nav-number">4.</span> <span class="nav-text">ScreenToGif</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Everything"><span class="nav-number">5.</span> <span class="nav-text">Everything</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#原理"><span class="nav-number">1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码实现"><span class="nav-number">2.</span> <span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#利用TextureView播放视频"><span class="nav-number">3.</span> <span class="nav-text">利用TextureView播放视频</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最终效果"><span class="nav-number">4.</span> <span class="nav-text">最终效果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考链接"><span class="nav-number">5.</span> <span class="nav-text">参考链接</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DEMO点我"><span class="nav-number">6.</span> <span class="nav-text">DEMO点我</span></a></li></ol></div>
             
 
           </div>
