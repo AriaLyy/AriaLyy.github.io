@@ -1,0 +1,1015 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Fragment," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Fragment 是android开发中最常用的组件之一，用了好几年，我都不知道Fragment到底是个什么东西，Activity加载Fragment的原理是怎样的，为什么官方会叫它为碎片？直到前段时间因为工作需要，从头看来一遍Fragment的源代码，然后就有了本文。本文将从commit开始一步步带你走向Fragmnt的生命周期！！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从commit一步步带你走向fragment的生命周期">
+<meta property="og:url" content="http://www.laoyuyu.me/2017/01/13/android_read_fragment_life_recycler/index.html">
+<meta property="og:site_name" content="laoyuyu的blog">
+<meta property="og:description" content="Fragment 是android开发中最常用的组件之一，用了好几年，我都不知道Fragment到底是个什么东西，Activity加载Fragment的原理是怎样的，为什么官方会叫它为碎片？直到前段时间因为工作需要，从头看来一遍Fragment的源代码，然后就有了本文。本文将从commit开始一步步带你走向Fragmnt的生命周期！！">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1824042-08597abbc80ed095.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-02-06T06:14:38.027Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="从commit一步步带你走向fragment的生命周期">
+<meta name="twitter:description" content="Fragment 是android开发中最常用的组件之一，用了好几年，我都不知道Fragment到底是个什么东西，Activity加载Fragment的原理是怎样的，为什么官方会叫它为碎片？直到前段时间因为工作需要，从头看来一遍Fragment的源代码，然后就有了本文。本文将从commit开始一步步带你走向Fragmnt的生命周期！！">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1824042-08597abbc80ed095.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.laoyuyu.me/2017/01/13/android_read_fragment_life_recycler/"/>
+
+
+
+
+
+  <title> 从commit一步步带你走向fragment的生命周期 | laoyuyu的blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=60460536";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">laoyuyu的blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description"></h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://www.laoyuyu.me/2017/01/13/android_read_fragment_life_recycler/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="AriaLyy">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar_icon.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="laoyuyu的blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="laoyuyu的blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                从commit一步步带你走向fragment的生命周期
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-13T21:20:08+08:00">
+                2017-01-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/源码阅读/" itemprop="url" rel="index">
+                    <span itemprop="name">源码阅读</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2017/01/13/android_read_fragment_life_recycler/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/01/13/android_read_fragment_life_recycler/" class="leancloud_visitors" data-flag-title="从commit一步步带你走向fragment的生命周期">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <hr>
+<p>Fragment 是android开发中最常用的组件之一，用了好几年，我都不知道Fragment到底是个什么东西，Activity加载Fragment的原理是怎样的，为什么官方会叫它为碎片？直到前段时间因为工作需要，从头看来一遍Fragment的源代码，然后就有了本文。<br><br>本文将从commit开始一步步带你走向Fragmnt的生命周期！！<br><a id="more"></a></p>
+<h1 id="经典的Frgment加载"><a href="#经典的Frgment加载" class="headerlink" title="经典的Frgment加载"></a>经典的Frgment加载</h1><p>从最经典的Activity加载Fragment的流程说起，如下所示，是Activity加载Frgment的例子代码。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">LinearLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line">    <span class="attr">android:orientation</span>=<span class="string">"horizontal"</span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span> <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span>&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">FrameLayout</span> <span class="attr">android:id</span>=<span class="string">"@+id/content"</span> <span class="attr">android:layout_weight</span>=<span class="string">"1"</span></span></div><div class="line">            <span class="attr">android:layout_width</span>=<span class="string">"0px"</span> <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></div><div class="line">            <span class="attr">android:background</span>=<span class="string">"?android:attr/detailsElementBackground"</span> /&gt;</div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">DetailsActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        <span class="keyword">if</span> (savedInstanceState == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="comment">// During initial setup, plug in the details fragment.</span></div><div class="line">            DetailsFragment details = <span class="keyword">new</span> DetailsFragment();</div><div class="line">            details.setArguments(getIntent().getExtras());</div><div class="line">            getFragmentManager().beginTransaction().replace(R.id.content, details).commit();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Activity是通过getFragmentManager().beginTransaction()来进行加载Fragment的，我们就从这句话开始吧！<br><br>fragment状态的切换时通过beginTransaction()方法来实现的，而beginTransaction()是FragmentManager的抽象方法，而FragmentManager真正的实现是FragamentManager的内部类<code>FragmentManagerImpl</code>，因此在FragmentManagerImpl中查找beginTransaction方法，最终方法发现beginTransaction真正生成的实例是<code>BackStackRecord</code>。<br></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> FragmentTransaction <span class="title">beginTransaction</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="keyword">new</span> BackStackRecord(<span class="keyword">this</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>由此可以知道replace，add，hide，show等等对Fragment状态的操作的真正实现都是在BackStackRecord的对应方法中实现，再看BackStackRecord的replace、add方法最终都会跳转到<code>doAddOP</code><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">doAddOp</span><span class="params">(<span class="keyword">int</span> containerViewId, Fragment fragment, String tag, <span class="keyword">int</span> opcmd)</span> </span>&#123;</div><div class="line">       fragment.mFragmentManager = mManager;</div><div class="line"></div><div class="line">       <span class="keyword">if</span> (tag != <span class="keyword">null</span>) &#123;</div><div class="line">           <span class="keyword">if</span> (fragment.mTag != <span class="keyword">null</span> &amp;&amp; !tag.equals(fragment.mTag)) &#123;</div><div class="line">               <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"Can't change tag of fragment "</span></div><div class="line">                       + fragment + <span class="string">": was "</span> + fragment.mTag</div><div class="line">                       + <span class="string">" now "</span> + tag);</div><div class="line">           &#125;</div><div class="line">           fragment.mTag = tag;</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       <span class="keyword">if</span> (containerViewId != <span class="number">0</span>) &#123;</div><div class="line">           <span class="keyword">if</span> (fragment.mFragmentId != <span class="number">0</span> &amp;&amp; fragment.mFragmentId != containerViewId) &#123;</div><div class="line">               <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"Can't change container ID of fragment "</span></div><div class="line">                       + fragment + <span class="string">": was "</span> + fragment.mFragmentId</div><div class="line">                       + <span class="string">" now "</span> + containerViewId);</div><div class="line">           &#125;</div><div class="line">           fragment.mContainerId = fragment.mFragmentId = containerViewId;</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       Op op = <span class="keyword">new</span> Op();</div><div class="line">       op.cmd = opcmd;</div><div class="line">       op.fragment = fragment;</div><div class="line">       addOp(op);</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<p>上面的代码中最核心的部分是最后的四行，可以看到内次replace都会new一个<code>Op</code>，那么<code>OP</code>到底是个什么东西？<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Op</span> </span>&#123;</div><div class="line">    Op next;</div><div class="line">    Op prev;</div><div class="line">    <span class="keyword">int</span> cmd;</div><div class="line">    Fragment fragment;</div><div class="line">    <span class="keyword">int</span> enterAnim;</div><div class="line">    <span class="keyword">int</span> exitAnim;</div><div class="line">    <span class="keyword">int</span> popEnterAnim;</div><div class="line">    <span class="keyword">int</span> popExitAnim;</div><div class="line">    ArrayList&lt;Fragment&gt; removed;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这是OP的源代码，可以看到OP有next和prev的字段，这两个字段的属性都是<code>Op</code>本身，并且它本身还有一些自带的属性，到现在依然不知道这个<code>Op</code>到底是什么，继续看<code>addOp</code>方法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">addOp</span><span class="params">(Op op)</span> </span>&#123;</div><div class="line">   <span class="keyword">if</span> (mHead == <span class="keyword">null</span>) &#123;</div><div class="line">       mHead = mTail = op;</div><div class="line">   &#125; <span class="keyword">else</span> &#123;</div><div class="line">       op.prev = mTail;</div><div class="line">       mTail.next = op;</div><div class="line">       mTail = op;</div><div class="line">   &#125;</div><div class="line">   op.enterAnim = mEnterAnim;</div><div class="line">   op.exitAnim = mExitAnim;</div><div class="line">   op.popEnterAnim = mPopEnterAnim;</div><div class="line">   op.popExitAnim = mPopExitAnim;</div><div class="line">   mNumOp++;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>从if-else语句中，再结合Op的结构，可以看出<code>Op</code>是一个双向链表，而<code>addOp</code>方法的作用是将replce生成的<code>Op</code>添加到当前链表中，到现在我们已经知道<code>Op</code>是个双向链表了，如下图所示：<br><img src="http://upload-images.jianshu.io/upload_images/1824042-08597abbc80ed095.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="双向链表图"></p>
+<p>那么<code>Op</code>到底有什么用，从目前看到的源码来看我们还是不知道。继续看BackStackRecord的show、remove等方法。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> FragmentTransaction <span class="title">remove</span><span class="params">(Fragment fragment)</span> </span>&#123;</div><div class="line">    Op op = <span class="keyword">new</span> Op();</div><div class="line">    op.cmd = OP_REMOVE;</div><div class="line">    op.fragment = fragment;</div><div class="line">    addOp(op);</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> FragmentTransaction <span class="title">hide</span><span class="params">(Fragment fragment)</span> </span>&#123;</div><div class="line">    Op op = <span class="keyword">new</span> Op();</div><div class="line">    op.cmd = OP_HIDE;</div><div class="line">    op.fragment = fragment;</div><div class="line">    addOp(op);</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> FragmentTransaction <span class="title">show</span><span class="params">(Fragment fragment)</span> </span>&#123;</div><div class="line">    Op op = <span class="keyword">new</span> Op();</div><div class="line">    op.cmd = OP_SHOW;</div><div class="line">    op.fragment = fragment;</div><div class="line">    addOp(op);</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>从上面的代码看出，无论是replcae、add还是remove、hide、show操作，都会new一个<code>Op</code>并加到链表中，而每次添加链表时，Op的cmd和fragment都不一样，因此可以猜测<strong>Op链表实质上是操作fragment的命令链表，而执行命令的操作由commit等方法来完成的</strong><br><br>继续看BackStackRecord的commit方法，在前面我们猜测fragment状态的控制是由这个方法完成的。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">commit</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> commitInternal(<span class="keyword">false</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">commitAllowingStateLoss</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> commitInternal(<span class="keyword">true</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">commitInternal</span><span class="params">(<span class="keyword">boolean</span> allowStateLoss)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (mCommitted) <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"commit already called"</span>);</div><div class="line">    <span class="keyword">if</span> (FragmentManagerImpl.DEBUG) &#123;</div><div class="line">        Log.v(TAG, <span class="string">"Commit: "</span> + <span class="keyword">this</span>);</div><div class="line">        LogWriter logw = <span class="keyword">new</span> LogWriter(TAG);</div><div class="line">        PrintWriter pw = <span class="keyword">new</span> PrintWriter(logw);</div><div class="line">        dump(<span class="string">"  "</span>, <span class="keyword">null</span>, pw, <span class="keyword">null</span>);</div><div class="line">    &#125;</div><div class="line">    mCommitted = <span class="keyword">true</span>;</div><div class="line">    <span class="keyword">if</span> (mAddToBackStack) &#123;</div><div class="line">        mIndex = mManager.allocBackStackIndex(<span class="keyword">this</span>);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        mIndex = -<span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">    mManager.enqueueAction(<span class="keyword">this</span>, allowStateLoss);</div><div class="line">    <span class="keyword">return</span> mIndex;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>上面是commit的源代码，核心代码是倒数第二行，看到命令的执行最终还是有mManager控制，但是真的是这样吗？mManager到底是在哪个地方初始化的，还记得<code>FragmentManagerImpl的beginTransaction</code>方法吗？<br><br>跳转到<code>FragmentManagerImpl</code>中，继续看enqueueAction<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Adds an action to the queue of pending actions.</div><div class="line"> *</div><div class="line"> * <span class="doctag">@param</span> action the action to add</div><div class="line"> * <span class="doctag">@param</span> allowStateLoss whether to allow loss of state information</div><div class="line"> * <span class="doctag">@throws</span> IllegalStateException if the activity has been destroyed</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">enqueueAction</span><span class="params">(Runnable action, <span class="keyword">boolean</span> allowStateLoss)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (!allowStateLoss) &#123;</div><div class="line">        checkStateLoss();</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</div><div class="line">        <span class="keyword">if</span> (mDestroyed || mHost == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"Activity has been destroyed"</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (mPendingActions == <span class="keyword">null</span>) &#123;</div><div class="line">            mPendingActions = <span class="keyword">new</span> ArrayList&lt;Runnable&gt;();</div><div class="line">        &#125;</div><div class="line">        mPendingActions.add(action);</div><div class="line">        <span class="keyword">if</span> (mPendingActions.size() == <span class="number">1</span>) &#123;</div><div class="line">            mHost.getHandler().removeCallbacks(mExecCommit);</div><div class="line">            mHost.getHandler().post(mExecCommit);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>从这个方法可以看出，真正执行执行Op命令的是<code>mExecCommit</code>这个线程，继续看<code>mExecCommit</code>线程。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line">Runnable mExecCommit = <span class="keyword">new</span> Runnable() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">        execPendingActions();</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"><span class="comment">/**</span></div><div class="line">* Only call from main thread!</div><div class="line">*/</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">execPendingActions</span><span class="params">()</span> </span>&#123;</div><div class="line">   <span class="keyword">if</span> (mExecutingActions) &#123;</div><div class="line">       <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"Recursive entry to executePendingTransactions"</span>);</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   <span class="keyword">if</span> (Looper.myLooper() != mHost.getHandler().getLooper()) &#123;</div><div class="line">       <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"Must be called from main thread of process"</span>);</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   <span class="keyword">boolean</span> didSomething = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">   <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</div><div class="line">       <span class="keyword">int</span> numActions;</div><div class="line"></div><div class="line">       <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</div><div class="line">           <span class="keyword">if</span> (mPendingActions == <span class="keyword">null</span> || mPendingActions.size() == <span class="number">0</span>) &#123;</div><div class="line">               <span class="keyword">break</span>;</div><div class="line">           &#125;</div><div class="line"></div><div class="line">           numActions = mPendingActions.size();</div><div class="line">           <span class="keyword">if</span> (mTmpActions == <span class="keyword">null</span> || mTmpActions.length &lt; numActions) &#123;</div><div class="line">               mTmpActions = <span class="keyword">new</span> Runnable[numActions];</div><div class="line">           &#125;</div><div class="line">           mPendingActions.toArray(mTmpActions);</div><div class="line">           mPendingActions.clear();</div><div class="line">           mHost.getHandler().removeCallbacks(mExecCommit);</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       mExecutingActions = <span class="keyword">true</span>;</div><div class="line">       <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;numActions; i++) &#123;</div><div class="line">           mTmpActions[i].run();</div><div class="line">           mTmpActions[i] = <span class="keyword">null</span>;</div><div class="line">       &#125;</div><div class="line">       mExecutingActions = <span class="keyword">false</span>;</div><div class="line">       didSomething = <span class="keyword">true</span>;</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   <span class="keyword">if</span> (mHavePendingDeferredStart) &#123;</div><div class="line">       <span class="keyword">boolean</span> loadersRunning = <span class="keyword">false</span>;</div><div class="line">       <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;mActive.size(); i++) &#123;</div><div class="line">           Fragment f = mActive.get(i);</div><div class="line">           <span class="keyword">if</span> (f != <span class="keyword">null</span> &amp;&amp; f.mLoaderManager != <span class="keyword">null</span>) &#123;</div><div class="line">               loadersRunning |= f.mLoaderManager.hasRunningLoaders();</div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line">       <span class="keyword">if</span> (!loadersRunning) &#123;</div><div class="line">           mHavePendingDeferredStart = <span class="keyword">false</span>;</div><div class="line">           startPendingDeferredFragments();</div><div class="line">       &#125;</div><div class="line">   &#125;</div><div class="line">   <span class="keyword">return</span> didSomething;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这是<code>mExecCommit</code>线程真正执行的方法，但是还是看不到任何关于Fragment被操作的痕迹，也看不到任何的Op命令，继续看execPendingActions方法，在这个方法中，有个代码片段吸引了我的注意<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">for (int i=0; i&lt;numActions; i++) &#123;</div><div class="line">     mTmpActions[i].run();</div><div class="line">     mTmpActions[i] = null;</div><div class="line"> &#125;</div><div class="line">``</div><div class="line">在这我看到了run方法！！！而mTmpActions是mPendingActions的数组化，在`enqueueAction`中，mPendingActions是加载的是BackStackRecord!!!!!**而BackStackRecord是实现Runnable接口的！！**，现在一切都清楚了，真正执行Op命令的还是在BackStackRecord中。&lt;/br&gt;</div><div class="line">继续看BackStackRecord的run方法。</div><div class="line">```java</div><div class="line">while (op != null) &#123;</div><div class="line">    ...</div><div class="line">    switch (op.cmd) &#123;</div><div class="line">        ...</div><div class="line">        case OP_ADD: &#123;</div><div class="line">            Fragment f = op.fragment;</div><div class="line">            f.mNextAnim = enterAnim;</div><div class="line">            mManager.addFragment(f, false);</div><div class="line">        &#125; break;</div><div class="line">        case OP_HIDE: &#123;</div><div class="line">            Fragment f = op.fragment;</div><div class="line">            f.mNextAnim = exitAnim;</div><div class="line">            mManager.hideFragment(f, transition, transitionStyle);</div><div class="line">        &#125; break;</div><div class="line">        case OP_SHOW: &#123;</div><div class="line">            Fragment f = op.fragment;</div><div class="line">            f.mNextAnim = enterAnim;</div><div class="line">            mManager.showFragment(f, transition, transitionStyle);</div><div class="line">        &#125; break;</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line">    op = op.next;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>上面是run的部分代码，到这里我们终于看到了希望见到的<code>Op</code>命令！！在run方法中，while会遍历并执行Op链表中的所有命令，执行命令的过程最终还是通过mManager来执行，拿addFragment来示例，<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addFragment</span><span class="params">(Fragment fragment, <span class="keyword">boolean</span> moveToStateNow)</span> </span>&#123;</div><div class="line">    ...</div><div class="line">    <span class="keyword">if</span> (moveToStateNow) &#123;</div><div class="line">        moveToState(fragment);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>从上面的代码看到真正控制Fragment状态的是moveToState方法，多次跳转后最终跳转到<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">moveToState</span><span class="params">(Fragment f, <span class="keyword">int</span> newState, <span class="keyword">int</span> transit, <span class="keyword">int</span> transitionStyle, <span class="keyword">boolean</span> keepActive)</span> </span>&#123;</div><div class="line">    ...</div><div class="line">    <span class="keyword">if</span> (f.mState &lt; newState) &#123;</div><div class="line">        ...</div><div class="line">        <span class="keyword">switch</span> (f.mState) &#123;</div><div class="line">        <span class="keyword">case</span> Fragment.INITIALIZING:</div><div class="line">            ...</div><div class="line">            f.onAttach(mHost.getContext());</div><div class="line">            ...</div><div class="line">        <span class="keyword">case</span> Fragment.CREATED:</div><div class="line">            ...</div><div class="line">            <span class="comment">// onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) return 的View将在这里被指向</span></div><div class="line">            f.mView = f.performCreateView(f.getLayoutInflater(f.mSavedFragmentState), container, f.mSavedFragmentState);</div><div class="line">            <span class="comment">//onActivityCreated(savedInstanceState); 在这里被调用</span></div><div class="line">            f.performActivityCreated(f.mSavedFragmentState);</div><div class="line">            <span class="comment">// Fragment的View将在这被加载进Activity中</span></div><div class="line">            container.addView(f.mView);</div><div class="line">            ...</div><div class="line">        <span class="keyword">case</span> Fragment.ACTIVITY_CREATED:</div><div class="line">        <span class="keyword">case</span> Fragment.STOPPED:</div><div class="line">            ...</div><div class="line">            <span class="comment">// onStart() 在这里被调用</span></div><div class="line">            f.performStart();</div><div class="line">            ...</div><div class="line">        <span class="keyword">case</span> Fragment.STARTED:</div><div class="line">            ...</div><div class="line">            <span class="comment">// onResume() 在这里被调用</span></div><div class="line">            f.performResume();</div><div class="line">            ...</div><div class="line">        &#125;</div><div class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(f.mState &gt; newState)&#123;</div><div class="line">        <span class="keyword">switch</span> (f.mState) &#123;</div><div class="line">            <span class="keyword">case</span> Fragment.RESUMED:</div><div class="line">                <span class="keyword">if</span> (newState &lt; Fragment.RESUMED) &#123;</div><div class="line">                    <span class="keyword">if</span> (DEBUG) Log.v(TAG, <span class="string">"movefrom RESUMED: "</span> + f);</div><div class="line">                    <span class="comment">// onPause()在这被调用</span></div><div class="line">                    f.performPause();</div><div class="line">                    f.mResumed = <span class="keyword">false</span>;</div><div class="line">                &#125;</div><div class="line">            <span class="keyword">case</span> Fragment.STARTED:</div><div class="line">                <span class="keyword">if</span> (newState &lt; Fragment.STARTED) &#123;</div><div class="line">                    <span class="keyword">if</span> (DEBUG) Log.v(TAG, <span class="string">"movefrom STARTED: "</span> + f);</div><div class="line">                    <span class="comment">// onStop()在这被调用</span></div><div class="line">                    f.performStop();</div><div class="line">                &#125;</div><div class="line">                ...</div><div class="line">            <span class="keyword">case</span> Fragment.CREATED:</div><div class="line">                <span class="keyword">if</span> (newState &lt; Fragment.CREATED) &#123;</div><div class="line">                    <span class="keyword">if</span> (f.mAnimatingAway != <span class="keyword">null</span>) &#123;</div><div class="line">                        f.mStateAfterAnimating = newState;</div><div class="line">                        newState = Fragment.CREATED;</div><div class="line">                    &#125; <span class="keyword">else</span> &#123;</div><div class="line">                        <span class="keyword">if</span> (DEBUG) Log.v(TAG, <span class="string">"movefrom CREATED: "</span> + f);</div><div class="line">                        <span class="keyword">if</span> (!f.mRetaining) &#123;</div><div class="line">                            <span class="comment">// onDestroy 在这被回调</span></div><div class="line">                            f.performDestroy();</div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>由于篇幅所限，上面的只是代码片段，从moveToState方法中，我们见到了Fragment的整个生命周期！！！<br><br>在第一个<code>switch的case Fragment.CREATED:</code>中Fragment 的 view 的被加载，不知道你是否还记得文章最开始的那个xml中id为content的FrameLayout，在这个case下，fragment的view正是被加载到这个Layout中！！！！！！<br><br>这里有个有意思的地方，两个switch都是没有break语句的，当我们第一次add是，f.mState的默认状态为INITIALIZING，该状态下，fragemnt就要走完onAttach–onResume的所有流程，通过上面的代码，最终可以知道，fragment的全部生命周期都由mState这个字段决定。<br></p>
+<p>到了现在<code>getFragmentManager().beginTransaction().replace(R.id.content, details).commit();</code>这句话我们算是完全清楚了它的工作流程。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>在加载Fragament中，beginTransaction()创建了一个BackStackRecord对象，该对象实现了Runnable接口，replace方法将replace命令加载到BackStackRecord的Op链表中，当开发者调用commit方法时，commit方法将以事件的形式生成Op命令并将Op传递给FragmentManagerImpl，<code>FragmentManagerImpl</code>在Activity的handler中启动mExecCommit线程，mExecCommit线程执行BackStackRecord线程，在BackStackRecord的run方法里面，遍历所有Op链表，依次执行Op链表中所有的命令，run的switch根据Op命令，动态执行调用FragmentManagerImpl的replace、add、show等方法，在FragmentManagerImpl中的replace、add、show等方法最终都会调用moveToState方法，而整个Fragment的生命周期都在这个moveToState方法中。在这方法中，在create中，fragment最终将被加载找eginTransaction().replace(R.id.content, details)，replace第一个参数所指向的Layout中！！加载View完成后，moveToState将根据fragment的mState继续执行Fragment的生命周期。<br></p>
+<p>到现在整个Fragment的生成加载，生命周期我们全部了解完成了，得出的最后一个结论是<strong>Fragment本质上是嵌入在Activity中一个ViewGroup的View，但是谷歌给这个View赋予了生命周期</strong>，看到Fragment后终于明白Square为什么要建议放弃Fragment了！！！<br><br>虽然感觉Square公司有点偏激，但是作为一般开发者，<strong>在能用自定义View的情况下还是尽量不要用Fragment，因为Fragment实在太复杂了，一旦出现奇怪的问题，根本找不到哪个地方出的错，说多了都是泪！！！</strong>。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Fragment/" rel="tag"># Fragment</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/27/android_dl_game_detail_3/" rel="next" title="Android 仿当乐游戏详情页面(三)">
+                <i class="fa fa-chevron-left"></i> Android 仿当乐游戏详情页面(三)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/15/在github上创建个人博客，其实没有那么难/" rel="prev" title="在github上创建个人博客，其实没有那么难">
+                在github上创建个人博客，其实没有那么难 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar_icon.png"
+               alt="AriaLyy" />
+          <p class="site-author-name" itemprop="name">AriaLyy</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/AriaLyy" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#经典的Frgment加载"><span class="nav-number">1.</span> <span class="nav-text">经典的Frgment加载</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">2.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AriaLyy</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "b59ed17a4f24455096d3abe2daaa974b",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("YmLoc4Q5JzFdf4sVLU3pV5gk-gzGzoHsz", "fTLfFPRYO2UE8acNUl8NLABf");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+</body>
+</html>

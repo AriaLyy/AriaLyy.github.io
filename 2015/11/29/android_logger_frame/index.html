@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Android TV,爬坑之路," />
+  <meta name="keywords" content="android,Logger," />
 
 
 
@@ -84,25 +84,24 @@
 
 
 
-<meta name="description" content="从去年开始，从事Android TV开发已经大半年了，期间遇到过各种各样的坑，最严重、最难解决的莫过于焦点问题。痛定思痛，决定把TV开发中遇到的各种坑一一分享出来，让更多的人不再爬我所爬过的坑。
-列表焦点问题在TV开发中，VerticalGridView是谷歌专门为Android TV适配的RecyclerView，VerticalGridView很好的解决了列表的焦点问题，但是如果使用不当，很">
+<meta name="description" content="可以这样说，Log日志是除了debug外我们调试程序的全部了，但是在实际的开发中，系统原生的Log功能并不强大，它只能打印简单的字符串，如果碰到JSON，MAP一类的特殊字符串它的打印效果将极其糟糕。
+机缘巧合下，我有幸见在github上见到了一个功能很强大的LOG日志库Logger，它功能强大，当你使用它打印LOG日志时，它不仅能把普通的字符串打印出来，甚至能定位你打印的位置。并且它能直接将J">
 <meta property="og:type" content="article">
-<meta property="og:title" content="那些年，我们爬过的坑--Andriud TV篇（一）">
-<meta property="og:url" content="http://www.laoyuyu.me/2017/02/17/那些年，我们爬过的坑-Andriud-TV篇（一）/index.html">
+<meta property="og:title" content="Android Logger 日志框架实现">
+<meta property="og:url" content="http://www.laoyuyu.me/2015/11/29/android_logger_frame/index.html">
 <meta property="og:site_name" content="laoyuyu的blog">
-<meta property="og:description" content="从去年开始，从事Android TV开发已经大半年了，期间遇到过各种各样的坑，最严重、最难解决的莫过于焦点问题。痛定思痛，决定把TV开发中遇到的各种坑一一分享出来，让更多的人不再爬我所爬过的坑。
-列表焦点问题在TV开发中，VerticalGridView是谷歌专门为Android TV适配的RecyclerView，VerticalGridView很好的解决了列表的焦点问题，但是如果使用不当，很">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1824042-fa68e5cebee33b1f.gif?imageMogr2/auto-orient/strip">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1824042-de1ec7d1d62d2e21.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1824042-b7155c5aac066224.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1824042-425170cd432501ad.gif?imageMogr2/auto-orient/strip">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1824042-7f23bb96cc19eb19.gif?imageMogr2/auto-orient/strip">
-<meta property="og:updated_time" content="2017-02-17T11:12:31.893Z">
+<meta property="og:description" content="可以这样说，Log日志是除了debug外我们调试程序的全部了，但是在实际的开发中，系统原生的Log功能并不强大，它只能打印简单的字符串，如果碰到JSON，MAP一类的特殊字符串它的打印效果将极其糟糕。
+机缘巧合下，我有幸见在github上见到了一个功能很强大的LOG日志库Logger，它功能强大，当你使用它打印LOG日志时，它不仅能把普通的字符串打印出来，甚至能定位你打印的位置。并且它能直接将J">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1824042-f5183b2ae512f0c3?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1824042-5c54ad4e80f0e13c?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1824042-2d75cdd4eeecc107?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://img.blog.csdn.net/20151129210035060">
+<meta property="og:updated_time" content="2017-02-06T06:17:07.658Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="那些年，我们爬过的坑--Andriud TV篇（一）">
-<meta name="twitter:description" content="从去年开始，从事Android TV开发已经大半年了，期间遇到过各种各样的坑，最严重、最难解决的莫过于焦点问题。痛定思痛，决定把TV开发中遇到的各种坑一一分享出来，让更多的人不再爬我所爬过的坑。
-列表焦点问题在TV开发中，VerticalGridView是谷歌专门为Android TV适配的RecyclerView，VerticalGridView很好的解决了列表的焦点问题，但是如果使用不当，很">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1824042-fa68e5cebee33b1f.gif?imageMogr2/auto-orient/strip">
+<meta name="twitter:title" content="Android Logger 日志框架实现">
+<meta name="twitter:description" content="可以这样说，Log日志是除了debug外我们调试程序的全部了，但是在实际的开发中，系统原生的Log功能并不强大，它只能打印简单的字符串，如果碰到JSON，MAP一类的特殊字符串它的打印效果将极其糟糕。
+机缘巧合下，我有幸见在github上见到了一个功能很强大的LOG日志库Logger，它功能强大，当你使用它打印LOG日志时，它不仅能把普通的字符串打印出来，甚至能定位你打印的位置。并且它能直接将J">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1824042-f5183b2ae512f0c3?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -130,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="http://www.laoyuyu.me/2017/02/17/那些年，我们爬过的坑-Andriud-TV篇（一）/"/>
+  <link rel="canonical" href="http://www.laoyuyu.me/2015/11/29/android_logger_frame/"/>
 
 
 
 
 
-  <title> 那些年，我们爬过的坑--Andriud TV篇（一） | laoyuyu的blog </title>
+  <title> Android Logger 日志框架实现 | laoyuyu的blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -291,7 +290,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://www.laoyuyu.me/2017/02/17/那些年，我们爬过的坑-Andriud-TV篇（一）/">
+  <link itemprop="mainEntityOfPage" href="http://www.laoyuyu.me/2015/11/29/android_logger_frame/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="AriaLyy">
@@ -315,7 +314,7 @@
             
             
               
-                那些年，我们爬过的坑--Andriud TV篇（一）
+                Android Logger 日志框架实现
               
             
           </h2>
@@ -330,8 +329,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-17T18:40:54+08:00">
-                2017-02-17
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-11-29T19:10:35+08:00">
+                2015-11-29
               </time>
             
 
@@ -353,8 +352,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/爬坑之路/" itemprop="url" rel="index">
-                    <span itemprop="name">爬坑之路</span>
+                  <a href="/categories/框架/" itemprop="url" rel="index">
+                    <span itemprop="name">框架</span>
                   </a>
                 </span>
 
@@ -371,7 +370,7 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a class="cloud-tie-join-count" href="/2017/02/17/那些年，我们爬过的坑-Andriud-TV篇（一）/#comments" itemprop="discussionUrl">
+                <a class="cloud-tie-join-count" href="/2015/11/29/android_logger_frame/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count join-count" itemprop="commentCount"></span>
                 </a>
               </span>
@@ -382,7 +381,7 @@
 
           
           
-             <span id="/2017/02/17/那些年，我们爬过的坑-Andriud-TV篇（一）/" class="leancloud_visitors" data-flag-title="那些年，我们爬过的坑--Andriud TV篇（一）">
+             <span id="/2015/11/29/android_logger_frame/" class="leancloud_visitors" data-flag-title="Android Logger 日志框架实现">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -410,25 +409,27 @@
 
       
         <hr>
-<p>从去年开始，从事Android TV开发已经大半年了，期间遇到过各种各样的坑，最严重、最难解决的莫过于焦点问题。痛定思痛，决定把TV开发中遇到的各种坑一一分享出来，让更多的人不再爬我所爬过的坑。</p>
-<h2 id="列表焦点问题"><a href="#列表焦点问题" class="headerlink" title="列表焦点问题"></a>列表焦点问题</h2><p>在TV开发中，VerticalGridView是谷歌专门为Android TV适配的RecyclerView，VerticalGridView很好的解决了列表的焦点问题，但是如果使用不当，很容易出现item子项焦点错乱问题。</p>
-<p>在TV开发中尽量尽可能不适用没有优化过的RecyclerView!!!!!</p>
-<h2 id="小坑—–item焦点无法获取问题"><a href="#小坑—–item焦点无法获取问题" class="headerlink" title="小坑—–item焦点无法获取问题"></a>小坑—–item焦点无法获取问题</h2><p>进入列表界面，我希望的是<strong>按上下左右按键，item将能取得焦点，实现放大效果</strong>，但是我的实际效果如图所示，按上下键，变成了列表上下滚动，而不是我希望实现的item放大。<br><img src="http://upload-images.jianshu.io/upload_images/1824042-fa68e5cebee33b1f.gif?imageMogr2/auto-orient/strip" alt="列表item无法获取焦点"></p>
-<a id="more"></a>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">mList.requestFocus();</div><div class="line">View child = mList.getChildAt(<span class="number">0</span>);</div><div class="line"><span class="keyword">if</span> (child != <span class="keyword">null</span>)&#123;</div><div class="line">  child.requestFocus();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>在列表里面，无论我如何获取焦点，item子项目都获取不到焦点，找了好多种方法都无法完美解决。最后发现，只要在item的xml根节点添加<code>android:focusable=&quot;true&quot;</code>便能完美解决。<br><br>吐血啊…<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line">&lt;LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"</div><div class="line">    android:focusable="true"&gt;</div><div class="line">    ...</div><div class="line">&lt;/LinearLayout&gt;</div></pre></td></tr></table></figure></p>
-<h2 id="中坑—–列表获取item总数错误问题"><a href="#中坑—–列表获取item总数错误问题" class="headerlink" title="中坑—–列表获取item总数错误问题"></a>中坑—–列表获取item总数错误问题</h2><p>在使用VerticalGridView，如果item的数量需要滑动才能显示完成，那么在你获取列表item总数时就会出现一个有趣的现象：<br>在VerticalGridView中无论你调用那个方法，你都不能准确获取到列表中Item的总数量。<br>如果你需要获取列表中Item的总数量，只能采取曲线救国的方案：利用Adapter来获取总数。</p>
-<p>如下图所示，我列表item总数为16。<br><img src="http://upload-images.jianshu.io/upload_images/1824042-de1ec7d1d62d2e21.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="获取Item总数"><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Log.d(TAG, <span class="string">"COUNT_1 ==&gt; "</span> + mList.getLayoutManager().getChildCount());</div><div class="line">Log.d(TAG, <span class="string">"COUNT_2 ==&gt; "</span> + mList.getChildCount());</div><div class="line">Log.d(TAG, <span class="string">"COUNT_3 ==&gt; "</span> + mAdapter.getItemCount());</div></pre></td></tr></table></figure></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1824042-b7155c5aac066224.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="log打印"><br>在使用上述的三种方法中，只有第三种才能准确获取列表中Item准确的数量。出现这问题的原因是：</p>
-<ul>
-<li>VerticalGridView.getLayoutManager().getChildCount();只能获取当前列表中当前可见的所有item。</li>
-<li>VerticalGridView.getChildCount();为ViewGrounp的重写方法，而在RecyclerView缓存原理中，RecyclerView只会显示当前所有可见的View，所以这个方法的效果和第一种方法得出的结果是一致的。</li>
-</ul>
-<h2 id="大坑—–手动请求Item焦点错乱问题"><a href="#大坑—–手动请求Item焦点错乱问题" class="headerlink" title="大坑—–手动请求Item焦点错乱问题"></a>大坑—–手动请求Item焦点错乱问题</h2><p>有的时候，我们需要让指定的item获取焦点，<strong>如果你的列表有4行，但是当前屏幕只显示了3行，这个时候，如果需要请求焦点的item恰好处于第4行</strong>，那么当你使用<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mList.getLayoutManager().getChildAt(postion).requestFocus();</div></pre></td></tr></table></figure></p>
-<p>去让指定的item获取焦点，这个时候会出现空指针异常，原因和上面list获取item总数错误的原因一致。<br>解决这个问题的方案为：先让VerticalGridView移动到该item，然后再处理item焦点请求。<br>如下代码所示：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">mList.scrollToPosition(<span class="number">14</span>);</div><div class="line">View v = mList.getLayoutManager().getChildAt(<span class="number">14</span>);</div><div class="line"><span class="keyword">if</span> (v == <span class="keyword">null</span>) &#123;</div><div class="line">  L.d(TAG, <span class="string">"null"</span>);</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">  v.requestFocus();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1824042-425170cd432501ad.gif?imageMogr2/auto-orient/strip" alt="指定Item焦点请求问题"></p>
-<h2 id="神坑—–手贱给VerticalGridView添加LayoutManager导致的问题"><a href="#神坑—–手贱给VerticalGridView添加LayoutManager导致的问题" class="headerlink" title="神坑—–手贱给VerticalGridView添加LayoutManager导致的问题"></a>神坑—–手贱给VerticalGridView添加LayoutManager导致的问题</h2><p>如果你使用VerticalGridView或者HorizontalGridView，是不需要自己添加LayoutManager的，如果你手贱添加LayoutManager，并且当你想让指定的Item获取焦点，则会导致Item焦点错乱，然后按上下左右键，焦点和预期不一致。<br>如下图所示，我向第14个item请求焦点，最终发现，第14个item焦点获取失败，按上下左右键，焦点和预期不一致。<br><img src="http://upload-images.jianshu.io/upload_images/1824042-7f23bb96cc19eb19.gif?imageMogr2/auto-orient/strip" alt="Item焦点错乱问题"></p>
-<p>解决方案：<br>去掉手贱添加的LayoutManager！！！</p>
+<p>可以这样说，Log日志是除了debug外我们调试程序的全部了，但是在实际的开发中，系统原生的Log功能并不强大，它只能打印简单的字符串，如果碰到JSON，MAP一类的特殊字符串它的打印效果将极其糟糕。</p>
+<p>机缘巧合下，我有幸见在github上见到了一个功能很强大的LOG日志库<a href="https://github.com/orhanobut/logger" target="_blank" rel="external">Logger</a>，它功能强大，当你使用它打印LOG日志时，它不仅能把普通的字符串打印出来，甚至能定位你打印的位置。并且它能直接将JSON字符串格式化并打印出来，省下了我们手动格式化JSON字符串的时间。</p>
+<p>下面是它的打印效果图<br><img src="http://upload-images.jianshu.io/upload_images/1824042-f5183b2ae512f0c3?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="效果图"><br><a id="more"></a></p>
+<h1 id="简单Logger日志实现"><a href="#简单Logger日志实现" class="headerlink" title="简单Logger日志实现"></a>简单Logger日志实现</h1><p>好了，看完Logger的功能介绍和效果图，想必你也很心动，也想要搞这样一个Logger库。<br>现在如果你想拥有这样一个日志系统，那么有两个简单的方法来供你选择：<br>    一、Clone <a href="https://github.com/orhanobut/logger" target="_blank" rel="external">点击我</a>，然后关闭此窗口…<br>    二、继续往下看。</p>
+<hr>
+<p>非常感谢你留下来继续看我的废话，现在让我们一起研究Logger的主要功能吧！</p>
+<h2 id="JSON格式化部实现"><a href="#JSON格式化部实现" class="headerlink" title="JSON格式化部实现"></a>JSON格式化部实现</h2><p>当我第一次使用Logger JSON格式化的功能时，我心情是悲伤的，因为它让我抛弃了陪伴我多年的JSON格式化网页。本着无比悲痛的心情，有生以来我第一次极其认真的查看了开源项目的代码。<br>后来，看完代码后的我，心情是崩溃的，原本以为JOSN格式化这么高达上的功能一定是很复杂的代码实现，后来发现尼玛就一行代码就能搞定，这是什么鬼啊，说好的复杂代码呢？？<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">    * 打印JSON</div><div class="line">    *</div><div class="line">    * <span class="doctag">@param</span> jsonStr</div><div class="line">    */</div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">j</span><span class="params">(String jsonStr)</span> </span>&#123;</div><div class="line">       <span class="keyword">if</span> (isDebug) &#123;</div><div class="line">           String message;</div><div class="line">           <span class="keyword">try</span> &#123;</div><div class="line">               <span class="keyword">if</span> (jsonStr.startsWith(<span class="string">"&#123;"</span>)) &#123;</div><div class="line">                   JSONObject jsonObject = <span class="keyword">new</span> JSONObject(jsonStr);</div><div class="line">                   message = jsonObject.toString(JSON_INDENT); <span class="comment">//这个是核心方法</span></div><div class="line">               &#125; <span class="keyword">else</span> <span class="keyword">if</span> (jsonStr.startsWith(<span class="string">"["</span>)) &#123;</div><div class="line">                   JSONArray jsonArray = <span class="keyword">new</span> JSONArray(jsonStr);</div><div class="line">                   message = jsonArray.toString(JSON_INDENT);</div><div class="line">               &#125; <span class="keyword">else</span> &#123;</div><div class="line">                   message = jsonStr;</div><div class="line">               &#125;</div><div class="line">           &#125; <span class="keyword">catch</span> (JSONException e) &#123;</div><div class="line">               message = jsonStr;</div><div class="line">           &#125;</div><div class="line"></div><div class="line">           message = LINE_SEPARATOR + message;</div><div class="line">           String[] lines = message.split(LINE_SEPARATOR);</div><div class="line">           StringBuilder sb = <span class="keyword">new</span> StringBuilder();</div><div class="line">        printLog(D, lines);<span class="comment">//请不要关注这行，这是控制台输出的Log方法</span></div><div class="line">       &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<p>以上就是JSON格式化的方法，想必你和我当初一样充满了错愕，我们每天都在用toString()、toString()…然后竟然不知道还有个toString(int xxxx)的重载方法！！！！</p>
+<p>是的，高大上的JSON格式化功能不需要你998行代码，也不需要你99行代码，没错，你没看错，它就只需要你一行toString(int xxxx)，并且附带赠送你xxxx个缩进空格！！</p>
+<h2 id="代码定位的实现"><a href="#代码定位的实现" class="headerlink" title="代码定位的实现"></a>代码定位的实现</h2><p>当年，我还是个孩子的时候我就知道我很无知，后来当我看了Logger的Json格式化代码的实现后，我已经对它不屑一顾。后来当我看了代码定位的功能后，我觉得我还是太年轻了…<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">    * 代码定位</div><div class="line">    *</div><div class="line">    * <span class="doctag">@param</span> type</div><div class="line">    */</div><div class="line">   <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">printLocation</span><span class="params">(<span class="keyword">char</span> type, String... msg)</span> </span>&#123;</div><div class="line">       StackTraceElement[] stack = Thread.currentThread().getStackTrace();</div><div class="line">       <span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">       <span class="comment">//获取代码所运行的位置</span></div><div class="line">       <span class="keyword">for</span> (StackTraceElement e : stack) &#123;</div><div class="line">           String name = e.getClassName();</div><div class="line">           <span class="keyword">if</span> (!name.equals(L.class.getName())) &#123;</div><div class="line">               i++;</div><div class="line">           &#125; <span class="keyword">else</span> &#123;</div><div class="line">               <span class="keyword">break</span>;</div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line">       <span class="comment">//进行方法位置偏移</span></div><div class="line">       i += <span class="number">3</span>;</div><div class="line">       <span class="comment">//当我能准确获取到I时，本部分已经完结，以下代码都是废话，请不要关注</span></div><div class="line">       String className = stack[i].getFileName();</div><div class="line">       String methodName = stack[i].getMethodName();</div><div class="line">       <span class="keyword">int</span> lineNumber = stack[i].getLineNumber();</div><div class="line">       StringBuilder sb = <span class="keyword">new</span> StringBuilder();</div><div class="line">       printHunk(type, HORIZONTAL_DOUBLE_LINE + <span class="string">"   Location:"</span>);</div><div class="line">       sb.append(HORIZONTAL_DOUBLE_LINE)</div><div class="line">               .append(<span class="string">"   ("</span>).append(className).append(<span class="string">":"</span>).append(lineNumber).append(<span class="string">")# "</span>).append(methodName);</div><div class="line">       printHunk(type, sb.toString());</div><div class="line">       printHunk(type, msg == <span class="keyword">null</span> || msg.length == <span class="number">0</span> ? BOTTOM_BORDER : MIDDLE_BORDER);</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<p>注：上面并不是纯粹的Logger源码，那是我根据Logger的思路自己写的代码定位功能，事实上Logger源代码那部分写得很优秀，但是你也懂的，优秀也就意味着代码不好看懂…</p>
+<p>好吧，我承认，我当初就是因为看这部分看得心烦，感觉很不爽，然后一怒之下，根据它的思路重新来写的。。。</p>
+<p>好吧，现在来所说代码定位的原理。<br>如下图所示：<br><img src="http://upload-images.jianshu.io/upload_images/1824042-5c54ad4e80f0e13c?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="元素拦截"><br>我想，上面的图你一定很熟悉，没错，那就是我们经常用的debug 然后watch某个元素时候的界面。<br>在上面的图片中，我们看到了一堆数组，其中圈红色的部分是不是感觉有点特殊，因为包名并不是系统的包名，那些都是我们自己的类，自己的方法的元素。</p>
+<p>现在，我想聪明的你已经懂了，代码定位的原理是通过Thread.currentThread().getStackTrace()方法获取到所有的运行元素，并根据获取到的数组，进行一定的偏移来准确捕获Looger( )被调用的真正位置。</p>
+<p>根据JVM的运行原理，每当JVM执行一个方法时，它都会把该方法压到一个方法栈里面，根据栈的后入先出原则，我们可以知道，Logger( )被调用的位置一定是方法栈里面最先被压入的函数的位置。也就是红圈里面的最后一个元素。也就是我为什么要 i += 3的原因；</p>
+<p>附上我自己写的类L（Logger）的调用流程：<br><img src="http://upload-images.jianshu.io/upload_images/1824042-2d75cdd4eeecc107?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="L流程"></p>
+<p>我们终于获取到了代码所在行的确切位置了，要在控制台上实现代码定位也就简单多了。</p>
+<p>根据获取到的StackTraceElement元素，我们能通过api接口获取到运行类的类名及其该方法所被调用的位置，然后按照下面的格式进行封装，便能实现控制台代码的定位。<br>代码定位格式：<br>（类名：代码行）<br>只要按照上面的规则进行组合类名和行，再通过系统提供的Log进行输出，便能通过控制台直接跳转到所在的代码行。</p>
+<h2 id="打印Map"><a href="#打印Map" class="headerlink" title="打印Map"></a>打印Map</h2><p>这个没啥好说的…<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">   * 打印MAp</div><div class="line">   */</div><div class="line">  public static void m(Map map) &#123;</div><div class="line">      Set set = map.entrySet();</div><div class="line">      if (set.size() &lt; 1) &#123;</div><div class="line">          printLog(D, &quot;[]&quot;);</div><div class="line">          return;</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      int i = 0;</div><div class="line">      String[] s = new String[set.size()];</div><div class="line">      for (Object aSet : set) &#123;</div><div class="line">          Map.Entry entry = (Map.Entry) aSet;</div><div class="line">          s[i] = entry.getKey() + &quot; = &quot; + entry.getValue() + &quot;,\n&quot;;</div><div class="line">          i++;</div><div class="line">      &#125;</div><div class="line">      printLog(V, s);</div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
+<h1 id="最终效果"><a href="#最终效果" class="headerlink" title="最终效果"></a>最终效果</h1><p><img src="http://img.blog.csdn.net/20151129210035060" alt="最终效果"></p>
+<h1 id="最重要的还是放在最后面"><a href="#最重要的还是放在最后面" class="headerlink" title="最重要的还是放在最后面"></a>最重要的还是放在最后面</h1><p><a href="https://github.com/AriaLyy/BlogDemo/tree/master/MyLoggerDemo" target="_blank" rel="external">我是伟大的DEMO</a></p>
 
       
     </div>
@@ -452,9 +453,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Android-TV/" rel="tag"># Android TV</a>
+            <a href="/tags/android/" rel="tag"># android</a>
           
-            <a href="/tags/爬坑之路/" rel="tag"># 爬坑之路</a>
+            <a href="/tags/Logger/" rel="tag"># Logger</a>
           
         </div>
       
@@ -463,8 +464,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/14/十款不是很出名但异常实用的软件/" rel="next" title="五款小众但异常实用的免费软件">
-                <i class="fa fa-chevron-left"></i> 五款小众但异常实用的免费软件
+              <a href="/2015/10/29/android_slide_close_activity/" rel="next" title="Android 仿微信侧滑关闭页面效果">
+                <i class="fa fa-chevron-left"></i> Android 仿微信侧滑关闭页面效果
               </a>
             
           </div>
@@ -473,8 +474,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/03/27/android_app_killed/" rel="prev" title="记一次app进程被kill的经历">
-                记一次app进程被kill的经历 <i class="fa fa-chevron-right"></i>
+              <a href="/2015/12/17/android_simple_nativotar_bar/" rel="prev" title="Android 最简单的导航栏实现">
+                Android 最简单的导航栏实现 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -611,7 +612,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#列表焦点问题"><span class="nav-number">1.</span> <span class="nav-text">列表焦点问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小坑—–item焦点无法获取问题"><span class="nav-number">2.</span> <span class="nav-text">小坑—–item焦点无法获取问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中坑—–列表获取item总数错误问题"><span class="nav-number">3.</span> <span class="nav-text">中坑—–列表获取item总数错误问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大坑—–手动请求Item焦点错乱问题"><span class="nav-number">4.</span> <span class="nav-text">大坑—–手动请求Item焦点错乱问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#神坑—–手贱给VerticalGridView添加LayoutManager导致的问题"><span class="nav-number">5.</span> <span class="nav-text">神坑—–手贱给VerticalGridView添加LayoutManager导致的问题</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简单Logger日志实现"><span class="nav-number">1.</span> <span class="nav-text">简单Logger日志实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#JSON格式化部实现"><span class="nav-number">1.1.</span> <span class="nav-text">JSON格式化部实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码定位的实现"><span class="nav-number">1.2.</span> <span class="nav-text">代码定位的实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#打印Map"><span class="nav-number">1.3.</span> <span class="nav-text">打印Map</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最终效果"><span class="nav-number">2.</span> <span class="nav-text">最终效果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最重要的还是放在最后面"><span class="nav-number">3.</span> <span class="nav-text">最重要的还是放在最后面</span></a></li></ol></div>
             
 
           </div>
