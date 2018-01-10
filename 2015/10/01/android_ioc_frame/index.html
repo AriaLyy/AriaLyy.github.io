@@ -84,20 +84,23 @@
 
 
 
-<meta name="description" content="什么是IOC？IOC框架称为控制控制反转框架也称为依赖注入框架，依赖注入(DI)和控制反转(IOC)是从不同的角度的描述的同一件事情，就是指通过引入IOC容器，利用依赖关系注入的方式，实现对象之间的解耦。">
+<meta name="description" content="什么是IOC？IOC框架称为控制控制反转框架也称为依赖注入框架，依赖注入(DI)和控制反转(IOC)是从不同的角度的描述的同一件事情，就是指通过引入IOC容器，利用依赖关系注入的方式，实现对象之间的解耦。
+IOC相关概念在写一个框架之前，我们需要了解下IOC的相关概念。简单来说，对象和IOC容器的关系就像电脑和外设之间的关系，其中电脑相当于对象，而IOC容器相当于一个个不同的电脑外设。外设具有不">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android IOC框架实现">
 <meta property="og:url" content="http://www.laoyuyu.me/2015/10/01/android_ioc_frame/index.html">
 <meta property="og:site_name" content="laoyuyu的blog">
-<meta property="og:description" content="什么是IOC？IOC框架称为控制控制反转框架也称为依赖注入框架，依赖注入(DI)和控制反转(IOC)是从不同的角度的描述的同一件事情，就是指通过引入IOC容器，利用依赖关系注入的方式，实现对象之间的解耦。">
+<meta property="og:description" content="什么是IOC？IOC框架称为控制控制反转框架也称为依赖注入框架，依赖注入(DI)和控制反转(IOC)是从不同的角度的描述的同一件事情，就是指通过引入IOC容器，利用依赖关系注入的方式，实现对象之间的解耦。
+IOC相关概念在写一个框架之前，我们需要了解下IOC的相关概念。简单来说，对象和IOC容器的关系就像电脑和外设之间的关系，其中电脑相当于对象，而IOC容器相当于一个个不同的电脑外设。外设具有不">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1824042-61e3aa536c6cf656?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1824042-2697bb44bb60522b?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1824042-abe686d30633587e?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1824042-849582cf0fc1d4a7?imageMogr2/auto-orient/strip">
-<meta property="og:updated_time" content="2017-02-06T06:19:17.031Z">
+<meta property="og:updated_time" content="2017-10-12T01:30:53.445Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android IOC框架实现">
-<meta name="twitter:description" content="什么是IOC？IOC框架称为控制控制反转框架也称为依赖注入框架，依赖注入(DI)和控制反转(IOC)是从不同的角度的描述的同一件事情，就是指通过引入IOC容器，利用依赖关系注入的方式，实现对象之间的解耦。">
+<meta name="twitter:description" content="什么是IOC？IOC框架称为控制控制反转框架也称为依赖注入框架，依赖注入(DI)和控制反转(IOC)是从不同的角度的描述的同一件事情，就是指通过引入IOC容器，利用依赖关系注入的方式，实现对象之间的解耦。
+IOC相关概念在写一个框架之前，我们需要了解下IOC的相关概念。简单来说，对象和IOC容器的关系就像电脑和外设之间的关系，其中电脑相当于对象，而IOC容器相当于一个个不同的电脑外设。外设具有不">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1824042-61e3aa536c6cf656?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
@@ -406,10 +409,11 @@
 
       
         <hr>
-<h2 id="什么是IOC？"><a href="#什么是IOC？" class="headerlink" title="什么是IOC？"></a>什么是IOC？</h2><p>IOC框架称为控制控制反转框架也称为依赖注入框架，依赖注入(DI)和控制反转(IOC)是从不同的角度的描述的同一件事情，就是指通过引入IOC容器，利用依赖关系注入的方式，实现对象之间的解耦。<br><a id="more"></a></p>
+<h2 id="什么是IOC？"><a href="#什么是IOC？" class="headerlink" title="什么是IOC？"></a>什么是IOC？</h2><p>IOC框架称为控制控制反转框架也称为依赖注入框架，依赖注入(DI)和控制反转(IOC)是从不同的角度的描述的同一件事情，就是指通过引入IOC容器，利用依赖关系注入的方式，实现对象之间的解耦。</p>
 <h2 id="IOC相关概念"><a href="#IOC相关概念" class="headerlink" title="IOC相关概念"></a>IOC相关概念</h2><p>在写一个框架之前，我们需要了解下IOC的相关概念。<br>简单来说，对象和IOC容器的关系就像电脑和外设之间的关系，其中电脑相当于对象，而IOC容器相当于一个个不同的电脑外设。外设具有不同的功能，并且他们和电脑之间都遵循着某种协议（如USB2.0协议），因此它们在彼此独立的同时却又能相互联系。<br>输入功能原本属于电脑的，但是外设键盘却能通过电脑提供的相关接口来控制电脑的输入功能，这就是IOC概念里面的控制反转。由于电脑和外设间都遵循着USB协议，键盘便可以实现随意切换，却不影响键盘的输入功能，这就是IOC概念里面的依赖注入。</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/1824042-61e3aa536c6cf656?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="电脑和外设"></p>
 <p>好了，了解完IOC协议后，便可以开始绘制相应的架构图了。</p>
+<a id="more"></a>
 <h2 id="IOC框架图"><a href="#IOC框架图" class="headerlink" title="IOC框架图"></a>IOC框架图</h2><p><img src="http://upload-images.jianshu.io/upload_images/1824042-2697bb44bb60522b?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="IOC框架图"></p>
 <p>这是我用<a href="http://staruml.io/" target="_blank" rel="external">StartUml</a>绘制的UML图。</p>
 <p>如这个图所示，整个IOC框架可以分为5个部分<br>1、ModuleListener，IOC的核心接口，相当于电脑的USB协议<br>2、AbsModule，这就是IOC容器，IOC容器功能都在这个类里面实现<br>3、IOCProxy，对象的静态代理，相当于电脑的USB接口<br>4、ModuleFactory，IOC容器的享元工厂，用于创建IOC容器<br>5、AbsActivity，具体的对象</p>
@@ -548,7 +552,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -557,7 +561,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -566,7 +570,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-count">25</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -633,7 +637,7 @@
         <div class="copyright" >
   
   &copy;  2015 - 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

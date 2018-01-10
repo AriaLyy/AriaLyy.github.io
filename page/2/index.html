@@ -280,7 +280,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://www.laoyuyu.me/2017/01/17/android_mutil_thread_download/">
+  <link itemprop="mainEntityOfPage" href="http://www.laoyuyu.me/2017/08/03/aria_ftp/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="AriaLyy">
@@ -305,8 +305,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/01/17/android_mutil_thread_download/" itemprop="url">
-                  Android多线程断点续传下载
+                <a class="post-title-link" href="/2017/08/03/aria_ftp/" itemprop="url">
+                  Android FTP 多线程断点续传下载\上传
                 </a>
               
             
@@ -322,8 +322,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-17T15:23:40+08:00">
-                2017-01-17
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-03T20:34:44+08:00">
+                2017-08-03
               </time>
             
 
@@ -345,8 +345,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/下载/" itemprop="url" rel="index">
-                    <span itemprop="name">下载</span>
+                  <a href="/categories/aira/" itemprop="url" rel="index">
+                    <span itemprop="name">aira</span>
                   </a>
                 </span>
 
@@ -364,7 +364,7 @@
 
           
           
-             <span id="/2017/01/17/android_mutil_thread_download/" class="leancloud_visitors" data-flag-title="Android多线程断点续传下载">
+             <span id="/2017/08/03/aria_ftp/" class="leancloud_visitors" data-flag-title="Android FTP 多线程断点续传下载\上传">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -392,13 +392,11 @@
 
       
         
-          
-          
-原理其实断点续传的原理很简单，从字面上理解，所谓断点续传就是从停止的地方重新下载。断点：线程停止的位置。续传：从停止的位置重新下载。用代码解析就是：断点 ： 当前线程已经下载完成的数据长度。续传 ： 向服务器请求上次线程停止位置之后的数据。原理知道了，功能实现起来也简单。每当线程停止时就把已下载的
-          ...
+          <p>最近在给我的开源下载框架<a href="https://github.com/AriaLyy/Aria">Aria</a>增加FTP断点续传下载和上传功能，在此过程中，爬了FTP的不少坑，终于将功能实现了，在此把一些核心功能点记录下载。</p>
+<h2 id="FTP下载原理"><a href="#FTP下载原理" class="headerlink" title="FTP下载原理"></a>FTP下载原理</h2><h4 id="FTP单线程断点续传"><a href="#FTP单线程断点续传" class="headerlink" title="FTP单线程断点续传"></a>FTP单线程断点续传</h4><p>FTP和传统的HTTP协议有所不同，由于FTP没有所谓的头文件，因此我们不能像HTTP那样通过设置header向服务器指定下载区间。<br><br>但是FTP协议提供了一个更好用的命令<code>REST</code>用于从指定位置恢复任务，同时FTP协议也提供了一个命令<code>SIZE</code>用于获取下载的文件大小，有了这两个命令，FTP断点续传也就没有什么问题。<br><br>FTP断点续传的原理和HTTP的断点续传原理差不多，在暂停时记录文件的停止位置，再次下载时，先读取记录的位置，如果位置存在，则通过<code>REST</code>命令告诉服务器从指定区间进行下载。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/01/17/android_mutil_thread_download/#more" rel="contents">
+            <a class="btn" href="/2017/08/03/aria_ftp/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -439,7 +437,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://www.laoyuyu.me/2017/01/15/在github上创建个人博客，其实没有那么难/">
+  <link itemprop="mainEntityOfPage" href="http://www.laoyuyu.me/2017/05/25/aria_file_download/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="AriaLyy">
@@ -464,8 +462,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/01/15/在github上创建个人博客，其实没有那么难/" itemprop="url">
-                  在github上创建个人博客，其实没有那么难
+                <a class="post-title-link" href="/2017/05/25/aria_file_download/" itemprop="url">
+                  一行代码实现android文件下载
                 </a>
               
             
@@ -481,8 +479,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-15T21:35:52+08:00">
-                2017-01-15
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-25T09:34:44+08:00">
+                2017-05-25
               </time>
             
 
@@ -504,8 +502,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/hexo/" itemprop="url" rel="index">
-                    <span itemprop="name">hexo</span>
+                  <a href="/categories/aira/" itemprop="url" rel="index">
+                    <span itemprop="name">aira</span>
                   </a>
                 </span>
 
@@ -523,7 +521,7 @@
 
           
           
-             <span id="/2017/01/15/在github上创建个人博客，其实没有那么难/" class="leancloud_visitors" data-flag-title="在github上创建个人博客，其实没有那么难">
+             <span id="/2017/05/25/aria_file_download/" class="leancloud_visitors" data-flag-title="一行代码实现android文件下载">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -551,12 +549,12 @@
 
       
         
-          <hr>
-<h1 id="成功搭建的hexo网站"><a href="#成功搭建的hexo网站" class="headerlink" title="成功搭建的hexo网站"></a>成功搭建的hexo网站</h1><p><img src="http://ol19jleh5.bkt.clouddn.com/hexo_blog_shot.png?watermark/2/text/bGFveXV5dS5tZQ==/font/5a6L5L2T/fontsize/500/fill/IzE4RTBCMA==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt="我的hexo网站"></p>
-<p>前段时间萌发自己搭建博客的念头，冲动之下买了个云服务器，奈何个人对html的东西实在不通，折腾了几天，blog依然丑的可以。后来无意间看见在github上可以搭建个人blog，就用谷歌折腾该如何在github上搭建blog，奈何网上很多教程都过于古老，或者很多细节都含糊不清，导致爬了好几天几天坑，才把blog搭建了起来。</p>
+          <h2 id="起源"><a href="#起源" class="headerlink" title="起源"></a>起源</h2><p>本文主要介绍开源项目<a href="https://github.com/AriaLyy/Aria">Aria</a>的使用。<br>Aria项目源于15年工作中遇到的一个文件下载管理的需求，当时被下载折磨的痛不欲生，从那时起便萌生了编写一个简单易用，稳当高效的下载框架，aria经历了1.0到3.0的开发，算是越来越接近当初所制定的目标了。</p>
+<p>以下为Aria的使用示例，使用Aria开发图片中的所有功能，只需要很短的时间，很少的代码。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1824042-eb57ee26e912002f.gif?imageMogr2/auto-orient/strip" alt="Aria示例"></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/01/15/在github上创建个人博客，其实没有那么难/#more" rel="contents">
+            <a class="btn" href="/2017/05/25/aria_file_download/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -597,7 +595,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://www.laoyuyu.me/2017/01/13/android_read_fragment_life_recycler/">
+  <link itemprop="mainEntityOfPage" href="http://www.laoyuyu.me/2017/03/30/android_simple_list_player/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="AriaLyy">
@@ -622,8 +620,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/01/13/android_read_fragment_life_recycler/" itemprop="url">
-                  从commit一步步带你走向fragment的生命周期
+                <a class="post-title-link" href="/2017/03/30/android_simple_list_player/" itemprop="url">
+                  列表播放视频简单实现
                 </a>
               
             
@@ -639,8 +637,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-13T21:20:08+08:00">
-                2017-01-13
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-30T20:27:37+08:00">
+                2017-03-30
               </time>
             
 
@@ -650,28 +648,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/源码阅读/" itemprop="url" rel="index">
-                    <span itemprop="name">源码阅读</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -681,7 +657,7 @@
 
           
           
-             <span id="/2017/01/13/android_read_fragment_life_recycler/" class="leancloud_visitors" data-flag-title="从commit一步步带你走向fragment的生命周期">
+             <span id="/2017/03/30/android_simple_list_player/" class="leancloud_visitors" data-flag-title="列表播放视频简单实现">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -709,11 +685,11 @@
 
       
         
-          <hr>
-<p>Fragment 是android开发中最常用的组件之一，用了好几年，我都不知道Fragment到底是个什么东西，Activity加载Fragment的原理是怎样的，为什么官方会叫它为碎片？直到前段时间因为工作需要，从头看来一遍Fragment的源代码，然后就有了本文。</br><br>本文将从commit开始一步步带你走向Fragmnt的生命周期！！<br>
+          <p>最近因项目需求，需要在滚动列表中播放视频。查了半天资料，发现其实现没有想象中的那么难。</p>
+<h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><p>众所周知，由于SurfaceView没有UI同步缓冲区，就导致了在列表滚动的时候，正在播放的视频跟不上滚动的步伐；而在SDK 15的时候，谷歌官方提供了新的具有UI同步缓存的视频播放api TextureView。<br>本文真是基于该新Api实现。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/01/13/android_read_fragment_life_recycler/#more" rel="contents">
+            <a class="btn" href="/2017/03/30/android_simple_list_player/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -754,7 +730,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://www.laoyuyu.me/2016/07/27/android_dl_game_detail_3/">
+  <link itemprop="mainEntityOfPage" href="http://www.laoyuyu.me/2017/03/27/android_app_killed/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="AriaLyy">
@@ -779,8 +755,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/07/27/android_dl_game_detail_3/" itemprop="url">
-                  Android 仿当乐游戏详情页面(三)
+                <a class="post-title-link" href="/2017/03/27/android_app_killed/" itemprop="url">
+                  记一次app进程被kill的经历
                 </a>
               
             
@@ -796,8 +772,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-07-27T13:16:00+08:00">
-                2016-07-27
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-27T20:14:03+08:00">
+                2017-03-27
               </time>
             
 
@@ -807,28 +783,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/android-效果/" itemprop="url" rel="index">
-                    <span itemprop="name">android 效果</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -838,7 +792,7 @@
 
           
           
-             <span id="/2016/07/27/android_dl_game_detail_3/" class="leancloud_visitors" data-flag-title="Android 仿当乐游戏详情页面(三)">
+             <span id="/2017/03/27/android_app_killed/" class="leancloud_visitors" data-flag-title="记一次app进程被kill的经历">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -866,11 +820,10 @@
 
       
         
-          <hr>
-<p>在上两篇文章中，我们已经实现了基本的界面的布局和移动效果，但是<code>mImgShotView</code>、<code>mContentView</code>却不能响应事件，而事件的响应就需要我们手动进行事件分发！</br><br><a href="http://www.laoyuyu.me/2016/03/21/Android-%E4%BB%BF%E5%BD%93%E4%B9%90%E6%B8%B8%E6%88%8F%E8%AF%A6%E6%83%85%E9%A1%B5%E9%9D%A2-%E4%B8%80/">android 仿当乐游戏详情页面（一）</a><br><a href="http://www.laoyuyu.me/2016/03/28/Android-%E4%BB%BF%E5%BD%93%E4%B9%90%E6%B8%B8%E6%88%8F%E8%AF%A6%E6%83%85%E9%A1%B5%E9%9D%A2-%E4%BA%8C/">android 仿当乐游戏详情页面（二）</a><br><a href="http://www.laoyuyu.me/2016/07/27/Android-%E4%BB%BF%E5%BD%93%E4%B9%90%E6%B8%B8%E6%88%8F%E8%AF%A6%E6%83%85%E9%A1%B5%E9%9D%A2-%E4%B8%89/">android 仿当乐游戏详情页面（三）</a><br>
+          <h1 id="出现问题"><a href="#出现问题" class="headerlink" title="出现问题"></a>出现问题</h1><p>最近在为河北电信做定制游戏平台开发的时候，遇到了一个很奇怪的问题，在某些盒子上，从平台打开某些游戏，玩上几分钟，然后该退出游戏，回到公司的游戏平台后，便出现了页面数据丢失的问题。<br>排查了几天(在这不得不吐槽电信的官僚主义，好话说尽，给予各种承诺，依然不提供可以进行adb调试的测试盒子)。最终发现是由于盒子内存太小(几年前的标准，1G内存！！！)，当运行大型游戏后，盒子系统自动kill了公司的游戏平台，吐血啊。<br>该问题如下图所示:<br><img src="http://upload-images.jianshu.io/upload_images/1824042-0daf1c5caf42ece2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="问题.png"></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016/07/27/android_dl_game_detail_3/#more" rel="contents">
+            <a class="btn" href="/2017/03/27/android_app_killed/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -911,7 +864,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://www.laoyuyu.me/2016/03/28/android_dl_game_detail_2/">
+  <link itemprop="mainEntityOfPage" href="http://www.laoyuyu.me/2017/02/17/那些年，我们爬过的坑-Andriud-TV篇（一）/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="AriaLyy">
@@ -936,8 +889,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/03/28/android_dl_game_detail_2/" itemprop="url">
-                  Android 仿当乐游戏详情页面(二)
+                <a class="post-title-link" href="/2017/02/17/那些年，我们爬过的坑-Andriud-TV篇（一）/" itemprop="url">
+                  那些年，我们爬过的坑--Andriud TV篇（一）
                 </a>
               
             
@@ -953,8 +906,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-03-28T21:52:58+08:00">
-                2016-03-28
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-17T18:40:54+08:00">
+                2017-02-17
               </time>
             
 
@@ -976,8 +929,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/android-效果/" itemprop="url" rel="index">
-                    <span itemprop="name">android 效果</span>
+                  <a href="/categories/爬坑之路/" itemprop="url" rel="index">
+                    <span itemprop="name">爬坑之路</span>
                   </a>
                 </span>
 
@@ -995,7 +948,7 @@
 
           
           
-             <span id="/2016/03/28/android_dl_game_detail_2/" class="leancloud_visitors" data-flag-title="Android 仿当乐游戏详情页面(二)">
+             <span id="/2017/02/17/那些年，我们爬过的坑-Andriud-TV篇（一）/" class="leancloud_visitors" data-flag-title="那些年，我们爬过的坑--Andriud TV篇（一）">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1024,10 +977,13 @@
       
         
           <hr>
-<p>在上一篇文章里面，基本上算是实现了该效果的布局，有了布局，接下来就要对布局进行移动处理。</br><br><a href="http://www.laoyuyu.me/2016/03/21/Android-%E4%BB%BF%E5%BD%93%E4%B9%90%E6%B8%B8%E6%88%8F%E8%AF%A6%E6%83%85%E9%A1%B5%E9%9D%A2-%E4%B8%80/">android 仿当乐游戏详情页面（一）</a><br><a href="http://www.laoyuyu.me/2016/03/28/Android-%E4%BB%BF%E5%BD%93%E4%B9%90%E6%B8%B8%E6%88%8F%E8%AF%A6%E6%83%85%E9%A1%B5%E9%9D%A2-%E4%BA%8C/">android 仿当乐游戏详情页面（二）</a><br><a href="http://www.laoyuyu.me/2016/07/27/Android-%E4%BB%BF%E5%BD%93%E4%B9%90%E6%B8%B8%E6%88%8F%E8%AF%A6%E6%83%85%E9%A1%B5%E9%9D%A2-%E4%B8%89/">android 仿当乐游戏详情页面（三）</a><br>
+<p>从去年开始，从事Android TV开发已经大半年了，期间遇到过各种各样的坑，最严重、最难解决的莫过于焦点问题。痛定思痛，决定把TV开发中遇到的各种坑一一分享出来，让更多的人不再爬我所爬过的坑。</p>
+<h2 id="列表焦点问题"><a href="#列表焦点问题" class="headerlink" title="列表焦点问题"></a>列表焦点问题</h2><p>在TV开发中，VerticalGridView是谷歌专门为Android TV适配的RecyclerView，VerticalGridView很好的解决了列表的焦点问题，但是如果使用不当，很容易出现item子项焦点错乱问题。</p>
+<p>在TV开发中尽量尽可能不适用没有优化过的RecyclerView!!!!!</p>
+<h2 id="小坑—–item焦点无法获取问题"><a href="#小坑—–item焦点无法获取问题" class="headerlink" title="小坑—–item焦点无法获取问题"></a>小坑—–item焦点无法获取问题</h2><p>进入列表界面，我希望的是<strong>按上下左右按键，item将能取得焦点，实现放大效果</strong>，但是我的实际效果如图所示，按上下键，变成了列表上下滚动，而不是我希望实现的item放大。<br><img src="http://upload-images.jianshu.io/upload_images/1824042-fa68e5cebee33b1f.gif?imageMogr2/auto-orient/strip" alt="列表item无法获取焦点"></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016/03/28/android_dl_game_detail_2/#more" rel="contents">
+            <a class="btn" href="/2017/02/17/那些年，我们爬过的坑-Andriud-TV篇（一）/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1063,7 +1019,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1106,7 +1062,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1115,7 +1071,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1124,7 +1080,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-count">25</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -1175,7 +1131,7 @@
         <div class="copyright" >
   
   &copy;  2015 - 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

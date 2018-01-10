@@ -85,22 +85,19 @@
 
 
 <meta name="description" content="最近因项目需求，需要在滚动列表中播放视频。查了半天资料，发现其实现没有想象中的那么难。
-原理众所周知，由于SurfaceView没有UI同步缓冲区，就导致了在列表滚动的时候，正在播放的视频跟不上滚动的步伐；而在SDK 15的时候，谷歌官方提供了新的具有UI同步缓存的视频播放api TextureView。本文真是基于该新Api实现。
-代码实现1234567891011121314151617181">
+原理众所周知，由于SurfaceView没有UI同步缓冲区，就导致了在列表滚动的时候，正在播放的视频跟不上滚动的步伐；而在SDK 15的时候，谷歌官方提供了新的具有UI同步缓存的视频播放api TextureView。本文真是基于该新Api实现。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="列表播放视频简单实现">
 <meta property="og:url" content="http://www.laoyuyu.me/2017/03/30/android_simple_list_player/index.html">
 <meta property="og:site_name" content="laoyuyu的blog">
 <meta property="og:description" content="最近因项目需求，需要在滚动列表中播放视频。查了半天资料，发现其实现没有想象中的那么难。
-原理众所周知，由于SurfaceView没有UI同步缓冲区，就导致了在列表滚动的时候，正在播放的视频跟不上滚动的步伐；而在SDK 15的时候，谷歌官方提供了新的具有UI同步缓存的视频播放api TextureView。本文真是基于该新Api实现。
-代码实现1234567891011121314151617181">
+原理众所周知，由于SurfaceView没有UI同步缓冲区，就导致了在列表滚动的时候，正在播放的视频跟不上滚动的步伐；而在SDK 15的时候，谷歌官方提供了新的具有UI同步缓存的视频播放api TextureView。本文真是基于该新Api实现。">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1824042-b5a62237999fc2d9.gif?imageMogr2/auto-orient/strip">
-<meta property="og:updated_time" content="2017-03-30T12:30:12.482Z">
+<meta property="og:updated_time" content="2017-09-15T10:05:06.973Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="列表播放视频简单实现">
 <meta name="twitter:description" content="最近因项目需求，需要在滚动列表中播放视频。查了半天资料，发现其实现没有想象中的那么难。
-原理众所周知，由于SurfaceView没有UI同步缓冲区，就导致了在列表滚动的时候，正在播放的视频跟不上滚动的步伐；而在SDK 15的时候，谷歌官方提供了新的具有UI同步缓存的视频播放api TextureView。本文真是基于该新Api实现。
-代码实现1234567891011121314151617181">
+原理众所周知，由于SurfaceView没有UI同步缓冲区，就导致了在列表滚动的时候，正在播放的视频跟不上滚动的步伐；而在SDK 15的时候，谷歌官方提供了新的具有UI同步缓存的视频播放api TextureView。本文真是基于该新Api实现。">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1824042-b5a62237999fc2d9.gif?imageMogr2/auto-orient/strip">
 
 
@@ -388,6 +385,7 @@
       
         <p>最近因项目需求，需要在滚动列表中播放视频。查了半天资料，发现其实现没有想象中的那么难。</p>
 <h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><p>众所周知，由于SurfaceView没有UI同步缓冲区，就导致了在列表滚动的时候，正在播放的视频跟不上滚动的步伐；而在SDK 15的时候，谷歌官方提供了新的具有UI同步缓存的视频播放api TextureView。<br>本文真是基于该新Api实现。</p>
+<a id="more"></a>
 <h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">RelativeLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"200dp"</span></div><div class="line">    <span class="attr">android:orientation</span>=<span class="string">"vertical"</span></div><div class="line">    <span class="attr">android:focusable</span>=<span class="string">"true"</span></div><div class="line">    &gt;</div><div class="line"></div><div class="line">  <span class="tag">&lt;<span class="name">TextureView</span></span></div><div class="line">      <span class="attr">android:id</span>=<span class="string">"@+id/video"</span></div><div class="line">      <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">      <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">      /&gt;</div><div class="line"></div><div class="line">  <span class="tag">&lt;<span class="name">ProgressBar</span></span></div><div class="line">      <span class="attr">android:id</span>=<span class="string">"@+id/pb"</span></div><div class="line">      <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">      <span class="attr">android:layout_height</span>=<span class="string">"200dp"</span></div><div class="line">      <span class="attr">android:layout_centerInParent</span>=<span class="string">"true"</span></div><div class="line">      /&gt;</div><div class="line"><span class="tag">&lt;/<span class="name">RelativeLayout</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>播放视频的item的布局文件，文件布局很简单，只有一个TextureView和一个ProgressBar，ProgressBar用于给用户展示视频的缓冲情况，TextureView用于处理视频播放。</p>
 <p>在adapter里面，除了对TextureView进行UI加载外，还需要MediaPlayer对视频播放提供支持，为了避免卡顿，需要在线程中处理MediaPlayer初始化操作。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">VideoPlay</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</div><div class="line">  MediaPlayer player;</div><div class="line">  String url;</div><div class="line">  WeakReference&lt;Surface&gt; surface;</div><div class="line">  WeakReference&lt;ProgressBar&gt; pb;</div><div class="line"></div><div class="line">  VideoPlay(String url, Surface surface, ProgressBar pb) &#123;</div><div class="line">    <span class="keyword">this</span>.url = url;</div><div class="line">    <span class="keyword">this</span>.surface = <span class="keyword">new</span> WeakReference&lt;&gt;(surface);</div><div class="line">    <span class="keyword">this</span>.pb = <span class="keyword">new</span> WeakReference&lt;&gt;(pb);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">void</span> <span class="title">stop</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (player != <span class="keyword">null</span> &amp;&amp; player.isPlaying()) &#123;</div><div class="line">      currentPosition = player.getCurrentPosition();</div><div class="line">      player.stop();</div><div class="line">      player.release();</div><div class="line">      player = <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">      player = <span class="keyword">new</span> MediaPlayer();</div><div class="line">      player.setDataSource(url);</div><div class="line">      player.setSurface(<span class="keyword">this</span>.surface.get());</div><div class="line">      player.setAudioStreamType(AudioManager.STREAM_VOICE_CALL);</div><div class="line">      player.setOnPreparedListener(<span class="keyword">new</span> MediaPlayer.OnPreparedListener() &#123;</div><div class="line">        <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPrepared</span><span class="params">(MediaPlayer mp)</span> </span>&#123;</div><div class="line">          <span class="keyword">if</span> (currentPosition != <span class="number">0</span> &amp;&amp; currentPosition != mp.getDuration()) &#123;</div><div class="line">            player.seekTo(currentPosition);</div><div class="line">          &#125;</div><div class="line">          player.start();</div><div class="line">          pb.get().setVisibility(View.INVISIBLE);</div><div class="line">        &#125;</div><div class="line">      &#125;);</div><div class="line">      player.setOnSeekCompleteListener(<span class="keyword">new</span> MediaPlayer.OnSeekCompleteListener() &#123;</div><div class="line">        <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSeekComplete</span><span class="params">(MediaPlayer mp)</span> </span>&#123;</div><div class="line">          currentPosition = <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">      &#125;);</div><div class="line">      player.prepare();</div><div class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">      e.printStackTrace();</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
@@ -438,7 +436,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/05/25/一行代码实现android文件下载/" rel="prev" title="一行代码实现android文件下载">
+              <a href="/2017/05/25/aria_file_download/" rel="prev" title="一行代码实现android文件下载">
                 一行代码实现android文件下载 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -512,7 +510,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -521,7 +519,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -530,7 +528,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-count">25</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -597,7 +595,7 @@
         <div class="copyright" >
   
   &copy;  2015 - 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

@@ -2,44 +2,156 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://www.laoyuyu.me/2017/05/25/%E4%B8%80%E8%A1%8C%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0android%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD/</loc>
+    <loc>http://www.laoyuyu.me/2018/01/10/flask_web_server_deploy/</loc>
     
-    <lastmod>2017-05-31T13:00:10.369Z</lastmod>
+    <lastmod>2018-01-10T08:13:11.547Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.laoyuyu.me/2017/09/15/VirtualApk_project_build/</loc>
+    
+    <lastmod>2017-11-16T03:13:46.368Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.laoyuyu.me/2017/09/13/abstract_processor_debug/</loc>
+    
+    <lastmod>2017-10-26T07:35:46.064Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.laoyuyu.me/2017/10/10/hexo_deploy_vps/</loc>
+    
+    <lastmod>2017-10-26T07:11:04.812Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.laoyuyu.me/2017/10/26/as_close_param_hints/</loc>
+    
+    <lastmod>2017-10-26T07:06:44.232Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.laoyuyu.me/2015/10/01/android_ioc_frame/</loc>
+    
+    <lastmod>2017-10-12T01:30:53.445Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.laoyuyu.me/2015/12/17/android_simple_nativotar_bar/</loc>
+    
+    <lastmod>2017-10-12T01:30:29.901Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.laoyuyu.me/2017/01/17/android_mutil_thread_download/</loc>
+    
+    <lastmod>2017-10-12T01:29:25.858Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://www.laoyuyu.me/2017/03/30/android_simple_list_player/</loc>
     
-    <lastmod>2017-03-30T12:30:12.482Z</lastmod>
+    <lastmod>2017-09-15T10:05:06.973Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.laoyuyu.me/2017/03/27/android_app_killed/</loc>
+    <loc>http://www.laoyuyu.me/2017/05/25/aria_file_download/</loc>
     
-    <lastmod>2017-03-30T12:26:25.860Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.laoyuyu.me/2017/02/17/%E9%82%A3%E4%BA%9B%E5%B9%B4%EF%BC%8C%E6%88%91%E4%BB%AC%E7%88%AC%E8%BF%87%E7%9A%84%E5%9D%91-Andriud-TV%E7%AF%87%EF%BC%88%E4%B8%80%EF%BC%89/</loc>
-    
-    <lastmod>2017-02-17T11:12:31.893Z</lastmod>
+    <lastmod>2017-09-15T10:04:29.062Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.laoyuyu.me/2017/02/14/%E5%8D%81%E6%AC%BE%E4%B8%8D%E6%98%AF%E5%BE%88%E5%87%BA%E5%90%8D%E4%BD%86%E5%BC%82%E5%B8%B8%E5%AE%9E%E7%94%A8%E7%9A%84%E8%BD%AF%E4%BB%B6/</loc>
+    <loc>http://www.laoyuyu.me/2017/08/03/aria_ftp/</loc>
     
-    <lastmod>2017-02-14T06:43:41.744Z</lastmod>
+    <lastmod>2017-09-15T10:03:58.950Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://www.laoyuyu.me/2017/01/15/%E5%9C%A8github%E4%B8%8A%E5%88%9B%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%EF%BC%8C%E5%85%B6%E5%AE%9E%E6%B2%A1%E6%9C%89%E9%82%A3%E4%B9%88%E9%9A%BE/</loc>
     
-    <lastmod>2017-02-08T03:22:02.125Z</lastmod>
+    <lastmod>2017-08-01T06:20:16.037Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.laoyuyu.me/2017/02/17/%E9%82%A3%E4%BA%9B%E5%B9%B4%EF%BC%8C%E6%88%91%E4%BB%AC%E7%88%AC%E8%BF%87%E7%9A%84%E5%9D%91-Andriud-TV%E7%AF%87%EF%BC%88%E4%B8%80%EF%BC%89/</loc>
+    
+    <lastmod>2017-08-01T06:20:16.037Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.laoyuyu.me/2017/02/14/%E5%8D%81%E6%AC%BE%E4%B8%8D%E6%98%AF%E5%BE%88%E5%87%BA%E5%90%8D%E4%BD%86%E5%BC%82%E5%B8%B8%E5%AE%9E%E7%94%A8%E7%9A%84%E8%BD%AF%E4%BB%B6/</loc>
+    
+    <lastmod>2017-08-01T06:20:16.036Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.laoyuyu.me/2015/10/29/android_slide_close_activity/</loc>
+    
+    <lastmod>2017-08-01T06:20:16.035Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.laoyuyu.me/2015/11/29/android_logger_frame/</loc>
+    
+    <lastmod>2017-08-01T06:20:16.034Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.laoyuyu.me/2017/01/13/android_read_fragment_life_recycler/</loc>
+    
+    <lastmod>2017-08-01T06:20:16.034Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.laoyuyu.me/2016/07/27/android_dl_game_detail_3/</loc>
+    
+    <lastmod>2017-08-01T06:20:16.033Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.laoyuyu.me/2016/03/28/android_dl_game_detail_2/</loc>
+    
+    <lastmod>2017-08-01T06:20:16.032Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.laoyuyu.me/2016/03/21/android_dl_game_detail_1/</loc>
+    
+    <lastmod>2017-08-01T06:20:16.032Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.laoyuyu.me/2016/02/23/android_boss_turn/</loc>
+    
+    <lastmod>2017-08-01T06:20:16.031Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.laoyuyu.me/2017/03/27/android_app_killed/</loc>
+    
+    <lastmod>2017-08-01T06:20:16.031Z</lastmod>
     
   </url>
   
@@ -47,76 +159,6 @@
     <loc>http://www.laoyuyu.me/googlef6194fe7efd5dedc.html</loc>
     
     <lastmod>2017-02-07T01:54:58.402Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.laoyuyu.me/2017/01/17/android_mutil_thread_download/</loc>
-    
-    <lastmod>2017-02-06T06:47:04.040Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.laoyuyu.me/2015/10/01/android_ioc_frame/</loc>
-    
-    <lastmod>2017-02-06T06:19:17.031Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.laoyuyu.me/2015/12/17/android_simple_nativotar_bar/</loc>
-    
-    <lastmod>2017-02-06T06:18:41.527Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.laoyuyu.me/2015/11/29/android_logger_frame/</loc>
-    
-    <lastmod>2017-02-06T06:17:07.658Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.laoyuyu.me/2015/10/29/android_slide_close_activity/</loc>
-    
-    <lastmod>2017-02-06T06:16:01.628Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.laoyuyu.me/2016/02/23/android_boss_turn/</loc>
-    
-    <lastmod>2017-02-06T06:15:48.987Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.laoyuyu.me/2017/01/13/android_read_fragment_life_recycler/</loc>
-    
-    <lastmod>2017-02-06T06:14:38.027Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.laoyuyu.me/2016/03/28/android_dl_game_detail_2/</loc>
-    
-    <lastmod>2017-02-06T06:13:43.719Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.laoyuyu.me/2016/07/27/android_dl_game_detail_3/</loc>
-    
-    <lastmod>2017-02-06T06:11:33.481Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.laoyuyu.me/2016/03/21/android_dl_game_detail_1/</loc>
-    
-    <lastmod>2017-02-06T06:10:18.854Z</lastmod>
     
   </url>
   

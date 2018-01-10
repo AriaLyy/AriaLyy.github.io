@@ -96,7 +96,7 @@
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1824042-843517c30becdcd6?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1824042-74a1e86dee5bd13c?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1824042-1fc216854a28525f?imageMogr2/auto-orient/strip">
-<meta property="og:updated_time" content="2017-02-06T06:47:04.040Z">
+<meta property="og:updated_time" content="2017-10-12T01:29:25.858Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android多线程断点续传下载">
 <meta name="twitter:description" content="原理其实断点续传的原理很简单，从字面上理解，所谓断点续传就是从停止的地方重新下载。断点：线程停止的位置。续传：从停止的位置重新下载。用代码解析就是：断点 ： 当前线程已经下载完成的数据长度。续传 ： 向服务器请求上次线程停止位置之后的数据。原理知道了，功能实现起来也简单。每当线程停止时就把已下载的数据长度写入记录文件，当重新下载时，从记录文件读取已经下载了的长度。而这个长度就是所需要的断点。
@@ -417,6 +417,7 @@
 <p>而开始写入数据时还需要用到RandomAccessFile里面的另外一个方法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">write</span><span class="params">(<span class="keyword">byte</span>[] buffer, <span class="keyword">int</span> byteOffset, <span class="keyword">int</span> byteCount)</span></span></div></pre></td></tr></table></figure></p>
 <p>该方法的使用和OutputStream的write的使用一模一样…</p>
 <p>以上便是断点续传的原理。</p>
+<a id="more"></a>
 <h2 id="多线程断点续传"><a href="#多线程断点续传" class="headerlink" title="多线程断点续传"></a>多线程断点续传</h2><p>而多线程断点续传便是在单线程的断点续传上延伸的，而多线程断点续传是把整个文件分割成几个部分，每个部分由一条线程执行下载，而每一条下载线程都要实现断点续传功能。<br>为了实现文件分割功能，我们需要使用到httpURLconnection的另外一个方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getContentLength</span><span class="params">()</span></span></div></pre></td></tr></table></figure></p>
 <p>当请求成功时，可以通过该方法获取到文件的总长度。<br><code>每一条线程下载大小 = fileLength / THREAD_NUM</code></p>
 <p>如下图所示，描述的便是多线程的下载模型：<br><img src="http://upload-images.jianshu.io/upload_images/1824042-411c25f0cb1927de?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="多线程下载描述"><br>在多线程断点续传下载中，有一点需要特别注意：<br>由于文件是分成多个部分是被不同的线程的同时下载的，这就需要，每一条线程都分别需要有一个断点记录，和一个线程完成状态的记录；</p>
@@ -549,7 +550,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -558,7 +559,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -567,7 +568,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-count">25</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -634,7 +635,7 @@
         <div class="copyright" >
   
   &copy;  2015 - 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
